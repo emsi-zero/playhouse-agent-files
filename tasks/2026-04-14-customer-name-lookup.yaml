@@ -1,0 +1,55 @@
+task:
+  id: "2026-04-14-customer-name-lookup"
+  type: feature
+  branch: "feature/customer-name-lookup"
+  description: "Entry flow customer lookup by phone or name (suggestions + search API)"
+  created: "2026-04-14T00:00:00Z"
+  phase: done
+  merged_at: "2026-04-14"
+  merge_commits:
+    playhouse_server: "328764e"
+    playhouse_web: "2adade4"
+
+repos:
+  playhouse-server:
+    needed: true
+    base_branch: main
+    task_branch: "feature/customer-name-lookup"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: true
+  playhouse-web:
+    needed: true
+    base_branch: main
+    task_branch: "feature/customer-name-lookup"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: true
+  playhouse-control-plane:
+    needed: false
+    base_branch: dev
+    task_branch: null
+  playhouse-cicd:
+    needed: false
+    base_branch: main
+    task_branch: null
+  playhouse-docs:
+    needed: false
+    base_branch: main
+    task_branch: null
+
+checklist:
+  - id: backend-api
+    repo: playhouse-server
+    description: "Search + suggestions serializers, services, views, tests"
+    status: done
+  - id: web-entry
+    repo: playhouse-web
+    description: "API helpers, useEntryFlowState, EntryLookupForm, i18n"
+    status: done
+
+notes: |
+  Plan: add_name-based_customer_lookup_to_entry_flow_61c0fa08. Do not edit plan file.
+  Squash-merged to main 2026-04-14. Remote task branches did not exist; local deleted.

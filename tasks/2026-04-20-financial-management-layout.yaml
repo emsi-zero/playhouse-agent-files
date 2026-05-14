@@ -1,0 +1,71 @@
+task:
+  id: "2026-04-20-financial-management-layout"
+  type: fix
+  branch: "fix/financial-management-page-scroll"
+  description: "Financial management: fixed-height list/detail; page scroll for ledger report"
+  created: "2026-04-20T00:00:00Z"
+  phase: done
+
+commit_policy:
+  auto_checkpoint: true
+  checkpoint_on_switch: true
+  squash_before_pr: true
+
+repos:
+  playhouse-web:
+    needed: true
+    base_branch: main
+    task_branch: "fix/financial-management-page-scroll"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: true
+  playhouse-server:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-control-plane:
+    needed: false
+    base_branch: dev
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-cicd:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-docs:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-integration-driver:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+
+checklist:
+  - id: layout-stackBelow
+    repo: playhouse-web
+    description: "ListDetailLayout stackBelow + FinancialManagementPage wiring"
+    status: done
+
+notes: |
+  List/detail fixed height; RoleNavigationShell .content scrolls for long ledger.

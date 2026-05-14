@@ -1,0 +1,66 @@
+task:
+  id: "2026-04-17-locker-open-on-assignment"
+  type: fix
+  branch: "fix/locker-open-on-assignment"
+  description: "Send hardware open when lockers are assigned via POST utility-assignments"
+  created: "2026-04-17T00:00:00Z"
+  phase: done
+
+repos:
+  playhouse-server:
+    needed: true
+    base_branch: main
+    task_branch: "fix/locker-open-on-assignment"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: true
+  playhouse-web:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-control-plane:
+    needed: false
+    base_branch: dev
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-cicd:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-integration-driver:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-docs:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+
+checklist:
+  - id: open-after-assign
+    repo: playhouse-server
+    description: "Trigger execute open after locker assignment + tests"
+    status: done
+
+notes: |
+  Merged to origin/main 2026-04-17 as 3f85684. Remote task branch was never pushed; local branch deleted.

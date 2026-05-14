@@ -1,0 +1,83 @@
+task:
+  id: "2025-04-15-qr-receipts"
+  type: feature
+  branch: "feature/qr-receipts-child-exit"
+  description: "QR receipts per child, scan on exit, optional settings"
+  created: "2025-04-15T12:00:00Z"
+  phase: done
+
+commit_policy:
+  auto_checkpoint: true
+  checkpoint_on_switch: true
+  checkpoint_on_session_end: true
+  squash_before_pr: true
+
+repos:
+  playhouse-server:
+    needed: true
+    base_branch: main
+    task_branch: "feature/qr-receipts-child-exit"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: true
+  playhouse-web:
+    needed: true
+    base_branch: main
+    task_branch: "feature/qr-receipts-child-exit"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: true
+  playhouse-control-plane:
+    needed: false
+    base_branch: dev
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-cicd:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-docs:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+
+checklist:
+  - id: manifest-branches
+    repo: playhouse-server
+    description: "Task manifest + branches"
+    status: done
+  - id: backend-qr-model-settings
+    repo: playhouse-server
+    description: "VisitChild QR fields, settings bool, entry QR assign, scan + exit"
+    status: done
+  - id: frontend-receipt-exit
+    repo: playhouse-web
+    description: "Receipt UI + entry integration + exit barcode"
+    status: done
+  - id: tests
+    repo: playhouse-server
+    description: "Backend + frontend tests"
+    status: done
+
+notes: |
+  Compact QR: PLAYHOUSE|v{id}|c{id}|t{ts}
+  Manager bypass via scan endpoint or POST exit with barcode_bypass_reason.
+  Receipt paper presets: entry.receipt_paper_size THERMAL_80 / THERMAL_58 / A4.
+
+merged_at: "2026-04-15"
+merged_commits:
+  playhouse-server: "f96130b"
+  playhouse-web: "0da073a"

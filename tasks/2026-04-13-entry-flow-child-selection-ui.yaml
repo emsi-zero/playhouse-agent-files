@@ -1,0 +1,78 @@
+task:
+  id: "2026-04-13-entry-flow-child-selection-ui"
+  type: refactor
+  branch: "refactor/entry-flow-child-selection"
+  description: "Entry flow child selection stage UI: compact customer summary with edit icon, bolder child section, child cards with age/special conditions, Add Child as dashed card, actions row Back+Continue only."
+  created: "2026-04-13T12:00:00Z"
+  phase: done
+  merged_to_main_commit: "d84de1b"
+
+commit_policy:
+  auto_checkpoint: true
+  checkpoint_on_switch: true
+  checkpoint_on_session_end: true
+  squash_before_pr: true
+
+repos:
+  playhouse-server:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-web:
+    needed: true
+    base_branch: main
+    task_branch: "refactor/entry-flow-child-selection"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: true
+  playhouse-control-plane:
+    needed: false
+    base_branch: dev
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-cicd:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-docs:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+
+checklist:
+  - id: customer-summary-edit-icon
+    repo: playhouse-web
+    description: "Compact customer summary (name + phone), edit icon button, EntryFlow CSS"
+    status: done
+  - id: child-cards-meta-styling
+    repo: playhouse-web
+    description: "Child list: age + special conditions, card styling, Add Child dashed card, i18n entryChildAgeYears"
+    status: done
+  - id: actions-row-layout
+    repo: playhouse-web
+    description: "EntryChildrenActions: Back + Continue only; children section wrapper"
+    status: done
+  - id: push-branch
+    repo: playhouse-web
+    description: "Merged to main (squash commit d84de1b); remote task branch was never pushed"
+    status: done
+
+notes: |
+  Squash-merged to origin/main as d84de1b. Local task branch deleted.
+  Remote branch refactor/entry-flow-child-selection did not exist on origin (skipped delete).

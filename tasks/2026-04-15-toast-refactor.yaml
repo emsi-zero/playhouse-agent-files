@@ -1,0 +1,35 @@
+task:
+  id: "2026-04-15-toast-refactor"
+  type: refactor
+  branch: "refactor/toast-system"
+  description: "Global toast stack: bottom corner, 5s dismiss, close button; replace Notice"
+  created: "2026-04-15T00:00:00Z"
+  phase: done
+  merged_at: "2026-04-15T00:00:00Z"
+  merge_commit_playhouse_web: "04e1be4"
+
+repos:
+  playhouse-web:
+    needed: true
+    base_branch: main
+    task_branch: "refactor/toast-system"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: true
+    merged_to: main
+
+checklist:
+  - id: toast-system
+    repo: playhouse-web
+    description: "ToastProvider, ToastContainer, replace Notice usages"
+    status: done
+
+notes: |
+  Squash-merged to main as 04e1be4. Local task branch deleted; remote branch was not present.
+  Notice component removed. useToast no-ops outside provider for tests.
+  Discount create: open-ended warning is inline banner (GENERAL + no valid_to), not toast.
+  shouldToastStatus: no global toasts for status.state===loading; no session-check toast on login.
+  Success toasts: entry visit status from EntryChildSelectionPanel; exit always; locker release one; discount via eligibility status.
+  ToastContainer: createPortal(document.body), z-index 100000 above modals.
+  Toast surfaces: tinted fills, border-inline-start accent (RTL-safe).

@@ -1,0 +1,64 @@
+task:
+  id: "2026-04-14-entry-flow-refactor"
+  type: refactor
+  branch: "refactor/entry-flow-ui-api"
+  description: "Atomic POST /visits/entry, entry flow context, progress bar, persist after pricing"
+  created: "2026-04-14T12:00:00Z"
+  phase: done
+
+repos:
+  playhouse-server:
+    needed: true
+    base_branch: main
+    task_branch: "refactor/entry-flow-ui-api"
+    branch_created: true
+    has_changes: true
+    committed: true
+    pushed: true
+  playhouse-web:
+    needed: true
+    base_branch: main
+    task_branch: "refactor/entry-flow-ui-api"
+    branch_created: true
+    has_changes: true
+    committed: true
+    pushed: true
+  playhouse-control-plane:
+    needed: false
+    base_branch: dev
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-cicd:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-docs:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+
+checklist:
+  - id: backend-entry
+    repo: playhouse-server
+    description: "POST /visits/entry, serializers, deprecation, tests"
+    status: done
+  - id: frontend-entry
+    repo: playhouse-web
+    description: "Context, hook, API, progress bar, modal, tests"
+    status: done
+
+notes: |
+  Merged to main 2026-04-14. Server 334228e, web f893b4c.
+  POST /api/v1/visits/entry — atomic customer/children/visit/open/discount/start/payment.
+  Web: EntryFlowProvider, deferred customer/child persistence until pricing submit, breadcrumb progress bar.

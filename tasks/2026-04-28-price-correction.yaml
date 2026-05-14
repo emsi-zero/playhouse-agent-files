@@ -1,0 +1,48 @@
+task:
+  id: "2026-04-28-price-correction"
+  type: feature
+  branch: "feature/price-correction"
+  description: "Manual price correction before payment (entry + exit) with settings"
+  created_local: "2026-04-28"
+  phase: done
+  integration_branch: null
+  merged_at: "2026-04-28"
+  merge_targets:
+    playhouse-server: "211a836"
+    playhouse-web: "1ae3b22"
+
+repos:
+  playhouse-server:
+    needed: true
+    base_branch: main
+    task_branch: "feature/price-correction"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: true
+  playhouse-web:
+    needed: true
+    base_branch: main
+    task_branch: "feature/price-correction"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: true
+  playhouse-control-plane:
+    needed: false
+  playhouse-cicd:
+    needed: false
+  playhouse-docs:
+    needed: false
+  playhouse-integration-driver:
+    needed: false
+
+checklist:
+  - id: price-correction
+    repo: multi
+    description: "Price correction feature (server + web)"
+    status: done
+
+notes: |
+  Merged to main (squash per repo). Local task branches deleted.
+  Remote feature/price-correction did not exist on origin.

@@ -1,0 +1,37 @@
+task:
+  id: "2026-04-20-sales-report-filters"
+  type: feature
+  branch: "feature/sales-report-filters-refactor"
+  description: "Shared sales report filters + active window hour filtering for time-based revenue"
+  created: "2026-04-20T00:00:00Z"
+  phase: done
+  merged_at: "2026-04-20"
+
+repos:
+  playhouse-server:
+    needed: true
+    base_branch: main
+    task_branch: "feature/sales-report-filters-refactor"
+    squash_merge_commit: "69856f7"
+    pushed: true
+  playhouse-web:
+    needed: true
+    base_branch: main
+    task_branch: "feature/sales-report-filters-refactor"
+    squash_merge_commit: "080773e"
+    pushed: true
+
+checklist:
+  - id: branches
+    repo: playhouse-web
+    description: "Create task branches in web and server"
+    status: done
+  - id: impl
+    repo: playhouse-web
+    description: "Implement shared filters and active hours"
+    status: done
+
+notes: |
+  Merged to main (squashed). Remote task branches were not present (never pushed).
+  playhouse-server: feat(financial-reports): time-based revenue active-window display filter
+  playhouse-web: feat(sales-reports): shared filters and time-based active-window reporting

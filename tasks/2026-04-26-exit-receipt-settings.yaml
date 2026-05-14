@@ -1,0 +1,47 @@
+task:
+  id: "2026-04-26-exit-receipt-settings"
+  type: feature
+  branch: "feature/exit-receipt-optional"
+  description: "Make exit receipt optional via system setting (server + staff UI)"
+  created: "2026-04-26T00:00:00Z"
+  phase: done
+  integration_branch: null
+
+repos:
+  playhouse-server:
+    needed: true
+    base_branch: main
+    task_branch: "feature/exit-receipt-optional"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: true
+    squash_merge: "28c0ba4"
+  playhouse-web:
+    needed: true
+    base_branch: main
+    task_branch: "feature/exit-receipt-optional"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: true
+    squash_merge: "e58ec03"
+
+checklist:
+  - id: server-setting
+    repo: playhouse-server
+    description: "Registry + get_entry_visit_settings + receipt API guard"
+    status: done
+  - id: web-ui
+    repo: playhouse-web
+    description: "Settings toggle + exit review when disabled"
+    status: done
+  - id: tests
+    repo: playhouse-server
+    description: "Pytest + web tests"
+    status: done
+
+notes: |
+  Squash-merged to main: playhouse-server 28c0ba4, playhouse-web e58ec03.
+  Remote task branch did not exist on origin; local branch deleted.
+  Merged: 2026-04-26 (user-approved /.cursor/merge).

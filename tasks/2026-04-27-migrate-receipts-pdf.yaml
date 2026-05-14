@@ -1,0 +1,124 @@
+task:
+  id: "2026-04-27-migrate-receipts-pdf"
+  type: feature
+  branch: "feature/pdf-receipts"
+  description: "Migrate receipt generation from ESC/POS to PDF with embedded fonts for beautiful, consistent previews and printing"
+  created: "2026-04-27T04:33:00Z"
+  phase: done
+  integration_branch: null
+
+commit_policy:
+  auto_checkpoint: true
+  checkpoint_on_switch: true
+  checkpoint_on_session_end: true
+  squash_before_pr: true
+
+repos:
+  playhouse-server:
+    needed: true
+    base_branch: main
+    task_branch: "feature/pdf-receipts"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: false
+  playhouse-integration-driver:
+    needed: true
+    base_branch: main
+    task_branch: "feature/pdf-receipts"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: false
+  playhouse-web:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-control-plane:
+    needed: false
+    base_branch: dev
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-cicd:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-docs:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+
+checklist:
+  - id: setup_backend_deps
+    repo: playhouse-server
+    description: "Add reportlab, Pillow to requirements.txt and verify installation"
+    status: done
+  - id: create_pdf_builder
+    repo: playhouse-server
+    description: "Create pdf_builder.py with receipt generation logic (entry/exit variants, i18n, QR support)"
+    status: done
+  - id: setup_fonts
+    repo: playhouse-server
+    description: "Download and add DM Sans + Vazirmatn fonts to static/fonts/, ensure PDF embedding works"
+    status: done
+  - id: update_receipt_renderer
+    repo: playhouse-server
+    description: "Add render_receipt_pdf() function and update receipt_print_payload() to include PDF"
+    status: done
+  - id: update_api_views
+    repo: playhouse-server
+    description: "Modify PrintReceiptViaDriverView and ReceiptPreviewView to send PDF payloads"
+    status: done
+  - id: update_receipt_tests
+    repo: playhouse-server
+    description: "Add PDF generation tests and verify existing tests still pass"
+    status: done
+  - id: update_driver_payload
+    repo: playhouse-integration-driver
+    description: "Update driver WebSocket handler to recognize and parse PDF payloads"
+    status: done
+  - id: implement_pdf_conversion
+    repo: playhouse-integration-driver
+    description: "Create pdf_converter.go for PDF-to-ESC/POS conversion in driver"
+    status: done
+  - id: update_print_handler
+    repo: playhouse-integration-driver
+    description: "Modify print_receipt.go to handle PDF inputs and run conversion"
+    status: done
+  - id: test_on_printer
+    repo: playhouse-integration-driver
+    description: "Validate PDF → ESC/POS → thermal printer output matches current receipts"
+    status: done
+  - id: visual_consistency_check
+    repo: playhouse-server
+    description: "Compare preview and actual printed receipt to ensure they match"
+    status: done
+
+notes: |
+  PDF Migration Plan:
+  - Use reportlab for PDF generation (lightweight, pure Python)
+  - Embed DM Sans + Vazirmatn fonts in PDFs
+  - Keep current HTML templates as reference (optional removal later)
+  - Driver converts PDF → ESC/POS for thermal printer output
+  - Phase 1: Backend PDF generation
+  - Phase 2: Driver integration
+  - Phase 3: Validation & testing
+  
+  Current thermal printers: unsure about PDF support, so PDF-to-ESC/POS conversion required
+  Transition strategy: Generate PDF, convert to ESC/POS server-side
+  Driver updates: Acceptable (PDF payload handling + conversion)

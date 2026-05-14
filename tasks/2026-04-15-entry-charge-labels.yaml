@@ -1,0 +1,25 @@
+task:
+  id: "2026-04-15-entry-charge-labels"
+  type: feature
+  branch: "feature/entry-charge-payment-status-labels"
+  description: "Exit flow: dynamic entry charge paid vs pending labels from payments"
+  phase: done
+
+repos:
+  playhouse-server:
+    merged_to: main
+    commit: "6635d4a"
+  playhouse-web:
+    merged_to: main
+    commit: "bd6c3ce"
+
+checklist:
+  - id: entry-labels-server
+    repo: playhouse-server
+    status: done
+  - id: entry-labels-web
+    repo: playhouse-web
+    status: done
+
+notes: |
+  Merged and pushed to origin/main (server then web). Plan: dynamic_entry_charge_payment_status_labels_a3686329.

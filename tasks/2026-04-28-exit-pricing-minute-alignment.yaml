@@ -1,0 +1,67 @@
+task:
+  id: "2026-04-28-exit-pricing-minute-alignment"
+  type: fix
+  branch: "fix/exit-pricing-minute-alignment"
+  description: "Exit pricing minute invariant, tests, breakdown UI clarity"
+  created_local: "2026-04-28"
+  phase: done
+  integration_branch: null
+
+repos:
+  playhouse-server:
+    needed: true
+    base_branch: main
+    task_branch: "fix/exit-pricing-minute-alignment"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: true
+  playhouse-web:
+    needed: true
+    base_branch: main
+    task_branch: "fix/exit-pricing-minute-alignment"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: true
+  playhouse-control-plane:
+    needed: false
+  playhouse-cicd:
+    needed: false
+  playhouse-docs:
+    needed: false
+  playhouse-integration-driver:
+    needed: false
+
+checklist:
+  - id: server-exit-pricing
+    repo: playhouse-server
+    description: "Tests + exit_pricing fixes"
+    status: done
+  - id: web-breakdown-label
+    repo: playhouse-web
+    description: "Show billed minutes in exit breakdown"
+    status: done
+  - id: web-duration-field-hint
+    repo: playhouse-web
+    description: "Wizard copy: duration minutes vs per-hour Rate"
+    status: done
+  - id: web-duration-default
+    repo: playhouse-web
+    description: "Default PER_HOUR steps to 60 minutes"
+    status: done
+
+notes: |
+  Do not merge to main without explicit approval.
+  
+  MAJOR REFACTOR COMPLETED:
+  - Renamed duration_minutes → duration_value throughout codebase
+  - NEW SEMANTICS: duration_value × billing_unit = actual timeline minutes
+    * PER_HOUR: duration_value is in HOURS (1 = 60 minutes, 2 = 120 minutes)
+    * PER_MINUTE: duration_value is in MINUTES (30 = 30 minutes)  
+    * BLOCK: duration_value is block size in minutes
+  - Added WalkinPricingStep.get_timeline_minutes() helper method
+  - Updated exit_pricing and base_price calculation logic
+  - Updated all serializers, validators, tests (backend)
+  - Updated all forms, hooks, components (frontend)
+  - Migration 0007: RenameField in database

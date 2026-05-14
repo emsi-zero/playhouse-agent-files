@@ -1,0 +1,44 @@
+task:
+  id: "2026-04-28-price-input-thousands"
+  type: fix
+  branch: "fix/price-input-thousands-separator"
+  description: "Show thousand separators in price-related NumericInput fields (e.g. 120,000)"
+  created_local: "2026-04-28"
+  phase: done
+  integration_branch: null
+
+repos:
+  playhouse-server:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-web:
+    needed: true
+    base_branch: main
+    task_branch: "fix/price-input-thousands-separator"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: true
+    merged_to_main_commit: "75b9069"
+  playhouse-control-plane:
+    needed: false
+  playhouse-cicd:
+    needed: false
+  playhouse-docs:
+    needed: false
+  playhouse-integration-driver:
+    needed: false
+
+checklist:
+  - id: numeric-grouping
+    repo: playhouse-web
+    description: "NumericInput groupThousands + wire price fields"
+    status: done
+
+notes: |
+  Squash-merged to main 2026-04-28. Web-only UI formatting.

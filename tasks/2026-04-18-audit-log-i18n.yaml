@@ -1,0 +1,19 @@
+task:
+  id: "2026-04-18-audit-log-i18n"
+  type: fix
+  branch: "fix/audit-log-i18n"
+  description: "Complete audit log action/module translations (EN/FA) vs server AuditLog"
+  phase: done
+  merged_to_main_at: "2026-04-18"
+
+repos:
+  playhouse-web:
+    base_branch: main
+    merge_commit: "b2d6c23"
+    pushed: true
+
+checklist:
+  - id: audit-i18n
+    repo: playhouse-web
+    description: "auditLogLabels + i18n for all AuditLog actions/modules"
+    status: done

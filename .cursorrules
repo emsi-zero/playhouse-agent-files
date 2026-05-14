@@ -1,0 +1,65 @@
+# PlayHouse Multi-Repo Workspace Configuration
+
+This workspace root contains shared configuration for the PlayHouse multi-repo workspace.
+
+## Workspace Skills
+
+Skills in `.cursor/skills/` provide cross-repo capabilities:
+
+| Skill | Purpose | Use When |
+|-------|---------|----------|
+| task-management | Multi-repo task lifecycle with persistent state | Creating, updating, finishing tasks |
+| workspace-navigation | Navigate the multi-repo workspace | Finding files, checking workspace state |
+| git-branching | Branch management across repos | Creating/switching/merging branches |
+| task-planning | Structured implementation planning | Starting features, breaking down work |
+
+## Workspace Rules
+
+Rules in `rules/` are automatically applied:
+
+| Rule | Purpose |
+|------|---------|
+| multi-repo-workspace.mdc | Guidelines for working across multiple repositories |
+| task-context.mdc | Manifest-based task state management |
+| preserve-existing-features.mdc | Ensure existing functionality isn't broken |
+| playhouse-operating-loop.mdc | Standard operating procedures |
+
+## Commands
+
+Commands in `commands/` provide quick workflows:
+
+| Command | Purpose |
+|---------|---------|
+| review.md | Code review with tests and diff analysis |
+| merge.md | Merge task branch (run only after explicit user approval to merge) |
+
+**Policy:** The agent does not merge into `main`/`dev` or push those branches without **explicit user approval** in the conversation. **`multi-tenancy/phase-*`** integration branches are **also protected**: no merge into them and no push without **explicit authorization**. During a phase, tasks are **intended** to land on **`multi-tenancy/phase-N`** (not `main`) once the user approves; merging the phase branch to `main` requires approval again when the phase completes. See `rules/task-context.mdc` and skills `task-management` / `git-branching`.
+
+## Templates
+
+Templates in `templates/` for consistent structure:
+
+| Template | Purpose |
+|----------|---------|
+| task-template.yaml | Starting point for new task manifests |
+
+## Task State
+
+- **Active task:** `current-task.yaml`
+- **Task archive:** `tasks/`
+
+## Repository Structure
+
+This workspace includes:
+
+```
+.cursor/                    # ← This shared config root
+playhouse-web/              # React customer-facing app
+playhouse-server/           # Django API backend
+playhouse-control-plane/    # Admin UI (React) + Go services
+playhouse-cicd/             # Docker/deployment configuration
+playhouse-docs/             # Documentation
+playhouse-integration-driver/  # On-prem Go driver (WebSocket + hardware)
+```
+
+Each repo has its own `.cursor/rules/` and `.cursor/skills/` for repo-specific configuration.

@@ -1,0 +1,135 @@
+task:
+  id: "2026-04-18-driver-print-prototype"
+  type: feature
+  branch: "feature/driver-print-prototype"
+  description: "Driver-based receipt printing UI and backend (prototype, no driver integration yet)"
+  created: "2026-04-18T12:00:00Z"
+  phase: done
+
+commit_policy:
+  auto_checkpoint: true
+  checkpoint_on_switch: true
+  squash_before_pr: true
+
+repos:
+  playhouse-server:
+    needed: true
+    base_branch: main
+    task_branch: "feature/driver-print-prototype"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: true
+    merge_commit: "e574c97"
+  playhouse-web:
+    needed: true
+    base_branch: main
+    task_branch: "feature/driver-print-prototype"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: true
+    merge_commit: "52e35b6"
+  playhouse-control-plane:
+    needed: false
+    base_branch: dev
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-cicd:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-docs:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-integration-driver:
+    needed: true
+    base_branch: main
+    task_branch: "feature/driver-print-prototype"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: true
+    merge_commit: "11fbc48"
+
+checklist:
+  - id: manifest-branch
+    repo: playhouse-server
+    description: "Task manifest + branch feature/driver-print-prototype"
+    status: done
+  - id: backend-settings
+    repo: playhouse-server
+    description: "Registry + get_entry_visit_settings for receipt print method/driver"
+    status: done
+  - id: backend-api
+    repo: playhouse-server
+    description: "POST receipts/print-via-driver + mock response"
+    status: done
+  - id: backend-render
+    repo: playhouse-server
+    description: "receipt_renderer.py prototype bytes"
+    status: done
+  - id: backend-test
+    repo: playhouse-server
+    description: "Tests for settings + print endpoint"
+    status: done
+  - id: frontend-settings
+    repo: playhouse-web
+    description: "EntryVisitSettingsCard print method + driver dropdown"
+    status: done
+  - id: frontend-drivers
+    repo: playhouse-web
+    description: "useSystemSettings fetch drivers"
+    status: done
+  - id: frontend-modals
+    repo: playhouse-web
+    description: "VisitEntryReceiptModal + SessionExitReviewStage print path"
+    status: done
+  - id: frontend-api
+    repo: playhouse-web
+    description: "receiptsApi printReceiptViaDriver"
+    status: done
+  - id: frontend-i18n
+    repo: playhouse-web
+    description: "Translation keys"
+    status: done
+  - id: frontend-test
+    repo: playhouse-web
+    description: "Component tests print method / fallback"
+    status: done
+  - id: integration-test
+    repo: playhouse-web
+    description: "Modal respects receipt_print_method (unit/integration)"
+    status: done
+  - id: receipt-settings-visit-qr
+    repo: playhouse-web
+    description: "Receipt settings: visit QR at exit section + i18n (no child-exit framing)"
+    status: done
+  - id: server-receipt-preview
+    repo: playhouse-server
+    description: "GET receipts/preview — HTML only; entry/exit + visit_not_closed parity with print"
+    status: done
+  - id: web-receipt-preview
+    repo: playhouse-web
+    description: "Entry + exit modals: fetchReceiptPreview, iframe srcDoc, print via iframe window.print"
+    status: done
+
+notes: |
+  Driver print: server Django templates (HTML preview) + pure ESC/POS text (stdlib) -> WebSocket print_receipt.
+  No WeasyPrint/poppler. Driver: PILCHE_PRINTER_DEVICE for raw device write.
+  POST print-via-driver body: receipt_variant (entry|exit), paper_size; visit data from DB.
+  GET receipts/preview: same staff auth; query visit_id, receipt_variant, paper_size — returns receipt_html for UI iframe.
+  Receipts: segno SVG data URI for HTML QR; Epson GS ( k native QR for ESC/POS; lang/locale query+body → fa|en via receipt_labels.py (no gettext .mo in repo).
+  Receipts: DM Sans + Vazirmatn (Google Fonts) for HTML; en uses Babel medium Gregorian; fa uses jdatetime Jalali + Django TIME_ZONE for HTML and ESC/POS text. Exit label "Exit"; extra line only if extra_minutes > 0.

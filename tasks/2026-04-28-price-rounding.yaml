@@ -1,0 +1,45 @@
+task:
+  id: "2026-04-28-price-rounding"
+  type: feature
+  branch: "feature/price-rounding"
+  description: "Money integer rounding + configurable auto-round button (server + web)"
+  created_local: "2026-04-28"
+  phase: done
+  integration_branch: null
+
+repos:
+  playhouse-server:
+    needed: true
+    base_branch: main
+    task_branch: "feature/price-rounding"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: true
+    merged_to_main_commit: "1532818"
+  playhouse-web:
+    needed: true
+    base_branch: main
+    task_branch: "feature/price-rounding"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: true
+    merged_to_main_commit: "ce73840"
+  playhouse-control-plane:
+    needed: false
+  playhouse-cicd:
+    needed: false
+  playhouse-docs:
+    needed: false
+  playhouse-integration-driver:
+    needed: false
+
+checklist:
+  - id: rounding-feature
+    repo: multi
+    description: "Price rounding (registry, API, UI, tests)"
+    status: done
+
+notes: |
+  Squash-merged to main 2026-04-28. Remote task branch was not present on origin.

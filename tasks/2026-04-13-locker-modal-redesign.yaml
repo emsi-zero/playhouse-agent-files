@@ -1,0 +1,33 @@
+task:
+  id: "2026-04-13-locker-modal-redesign"
+  type: feature
+  branch: "feature/locker-modal-redesign"
+  description: "Redesign SessionLockersModal: sticky summary, grouped assignments, card-based add section; API utility_set_id; validation/grouping fixes"
+  created: "2026-04-13T00:00:00Z"
+  phase: done
+  merged_at: "2026-04-14"
+
+repos:
+  playhouse-server:
+    needed: true
+    base_branch: main
+    merge_commit: "d53da46"
+    note: "UtilityAssignmentSerializer includes utility_set_id"
+  playhouse-web:
+    needed: true
+    base_branch: main
+    merge_commit: "0705d26"
+    note: "Squash merge: session lockers modal + validation + grouping tests"
+
+checklist:
+  - id: task-setup
+    status: done
+  - id: implement-components
+    status: done
+  - id: test-and-commit
+    status: done
+  - id: merge-to-main
+    status: done
+
+notes: |
+  Merged playhouse-server first, then playhouse-web. Feature branches deleted on remote (web); server remote branch did not exist.

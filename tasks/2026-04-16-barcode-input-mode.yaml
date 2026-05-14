@@ -1,0 +1,40 @@
+task:
+  id: "2026-04-16-barcode-input-mode"
+  type: feature
+  branch: "feature/barcode-input-mode"
+  description: "Replace barcode gun toggle with camera/USB/both dropdown"
+  created: "2026-04-16T00:00:00Z"
+  phase: done
+  merged_at: "2026-04-16"
+
+repos:
+  playhouse-server:
+    needed: true
+    base_branch: main
+    task_branch: "feature/barcode-input-mode"
+    branch_created: true
+    merge_commit: "4971813"
+    pushed: true
+  playhouse-web:
+    needed: true
+    base_branch: main
+    task_branch: "feature/barcode-input-mode"
+    branch_created: true
+    merge_commit: "1d85b79"
+    pushed: true
+  playhouse-control-plane:
+    needed: false
+  playhouse-cicd:
+    needed: false
+  playhouse-docs:
+    needed: false
+
+checklist:
+  - id: server-barcode-mode
+    repo: playhouse-server
+    description: "Registry entry.barcode_input_mode + legacy migration + get_entry_visit_settings"
+    status: done
+  - id: web-barcode-mode
+    repo: playhouse-web
+    description: "Settings dropdown + ExitChildScanModal + i18n + tests"
+    status: done

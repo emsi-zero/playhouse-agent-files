@@ -1,0 +1,78 @@
+task:
+  id: "2026-04-13-datepicker-jest-review"
+  type: fix
+  branch: "fix/date-picker-jest-review"
+  description: "DatePicker Jalali month navigation (uncontrolled calendar); Jest setup (matchMedia, globalThis.fetch sync with apiClient); App.test customer entry child assertion."
+  created: "2026-04-13T12:00:00Z"
+  phase: done
+  merged_at: "2026-04-13"
+  merge_commit: "67396e2"
+
+commit_policy:
+  auto_checkpoint: true
+  checkpoint_on_switch: true
+  checkpoint_on_session_end: true
+  squash_before_pr: true
+
+repos:
+  playhouse-server:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-web:
+    needed: true
+    base_branch: main
+    task_branch: "fix/date-picker-jest-review"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: true
+  playhouse-control-plane:
+    needed: false
+    base_branch: dev
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-cicd:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-docs:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+
+checklist:
+  - id: datepicker-jalali
+    repo: playhouse-web
+    description: "DatePicker: do not control currentDate so library owns visible month in Persian mode"
+    status: done
+  - id: jest-setup
+    repo: playhouse-web
+    description: "setupTests: jest-dom, matchMedia mock resilient to restoreAllMocks"
+    status: done
+  - id: app-test-fetch
+    repo: playhouse-web
+    description: "App.test: installFetchMock on globalThis + window; children URL matcher; findByText for child"
+    status: done
+  - id: push-branch
+    repo: playhouse-web
+    description: "Merged to origin/main (task branch was never pushed; local branch deleted after merge)"
+    status: done
+
+notes: |
+  Squash-merged into main as 67396e2. Remote task branch did not exist; local fix/date-picker-jest-review deleted.

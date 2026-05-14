@@ -1,0 +1,90 @@
+task:
+  id: "2026-04-22-phase0-ws3"
+  type: feature
+  branch: "feature/registry-client"
+  description: "Phase 0 WS-3: Registry Client — read-only DB connection, query methods, tests"
+  created: "2026-04-22T14:00:00Z"
+  phase: done
+  integration_branch: "multi-tenancy/phase-0"
+
+commit_policy:
+  auto_checkpoint: true
+  checkpoint_on_switch: true
+  checkpoint_on_session_end: true
+  squash_before_pr: true
+
+repos:
+  playhouse-server:
+    needed: true
+    base_branch: main
+    task_branch: "feature/registry-client"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: true
+  playhouse-cicd:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-web:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-control-plane:
+    needed: false
+    base_branch: dev
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-docs:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-integration-driver:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+
+checklist:
+  - id: ws3-registry-db
+    repo: playhouse-server
+    description: "Add DATABASES['registry'] from REGISTRY_DATABASE_URL in settings.py"
+    status: done
+  - id: ws3-registry-client
+    repo: playhouse-server
+    description: "Implement apps/tenancy/registry.py (RegistryClient, singleton)"
+    status: done
+  - id: ws3-unit-tests
+    repo: playhouse-server
+    description: "Add apps/tenancy/tests/test_registry.py with mocks and coverage"
+    status: done
+  - id: ws3-check-registry-cmd
+    repo: playhouse-server
+    description: "Add management command check_registry"
+    status: done
+  - id: ws3-verify
+    repo: playhouse-server
+    description: "Run pytest on tenancy registry tests"
+    status: done
+
+notes: |
+  Closed via /.cursor/merge: merged feature/registry-client into multi-tenancy/phase-0 and pushed
+  (tip 9abf97e on origin). Local task branch deleted.

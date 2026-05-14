@@ -1,0 +1,73 @@
+task:
+  id: "2026-04-14-merge-visitsession-into-visit"
+  type: refactor
+  branch: "refactor/merge-visitsession-into-visit"
+  description: "Merge VisitSession into Visit; update APIs and playhouse-web client"
+  created: "2026-04-14T00:00:00Z"
+  phase: done
+
+repos:
+  playhouse-server:
+    needed: true
+    base_branch: main
+    task_branch: "refactor/merge-visitsession-into-visit"
+    branch_created: true
+    has_changes: true
+    committed: true
+    pushed: true
+  playhouse-web:
+    needed: true
+    base_branch: main
+    task_branch: "refactor/merge-visitsession-into-visit"
+    branch_created: true
+    has_changes: true
+    committed: true
+    pushed: true
+  playhouse-control-plane:
+    needed: false
+    base_branch: dev
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-cicd:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-docs:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+
+checklist:
+  - id: manifest-branches
+    repo: ".cursor"
+    description: "Manifest + task branches in server and web"
+    status: done
+  - id: backend-complete
+    repo: playhouse-server
+    description: "Models, migrations, domain, API, tests"
+    status: done
+  - id: frontend-complete
+    repo: playhouse-web
+    description: "API, hooks, components, i18n, tests"
+    status: done
+  - id: verify-ci
+    repo: playhouse-server
+    description: "Run pytest and web tests"
+    status: done
+
+notes: |
+  Merged to main 2026-04-14: fast-forward merge. Server 61d0f8e, web 3c0e7f6.
+  Coordinated deploy: backend then frontend. Visit.Status.OPEN -> ACTIVE.
+  Session UI components kept filenames (SessionExitModal, etc.); API paths updated.
+  Renamed domain: visit_exit.py, visit_pricing.py. Audit: visit_started / visit_exited.

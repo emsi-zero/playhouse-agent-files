@@ -1,0 +1,394 @@
+---
+description: Load task context at start of every session and maintain task state
+alwaysApply: true
+---
+
+# Task Context Loading (MANDATORY)
+
+This workspace uses a task manifest file to maintain state across sessions.
+
+**Manifest location:** `/home/emad/Projects/Pilche/.cursor/current-task.yaml`
+
+## At the START of Every Conversation
+
+Before doing anything else:
+
+1. **Check if manifest exists:**
+   ```bash
+   cat /home/emad/Projects/Pilche/.cursor/current-task.yaml 2>/dev/null || echo "NO_ACTIVE_TASK"
+   ```
+
+2. **Check branch state in all repos:**
+   ```bash
+   PILCHE=/home/emad/Projects/Pilche
+   for repo in playhouse-server playhouse-control-plane playhouse-web playhouse-cicd playhouse-docs playhouse-integration-driver; do
+     branch=$(git -C "$PILCHE/$repo" branch --show-current 2>/dev/null)
+     echo "$repo: $branch"
+   done
+   ```
+
+3. **If manifest exists**, announce:
+   ```
+   Active Task: <task.description>
+   Branch: <task.branch>
+   Phase: <task.phase>
+   
+   Repos:
+   - <repo>: branch[✓/✗] changes[✓/✗] committed[✓/✗]
+   
+   Checklist:
+   - [x] Done items
+   - [ ] Pending items (next →)
+   ```
+
+4. **If no manifest exists** and user describes a task:
+
+   **In Plan Mode:**
+   - Your plan MUST start with task setup todos:
+     1. `[ ] Create task manifest (current-task.yaml)`
+     2. `[ ] Create task branch in <repo> from <base_branch>`
+   - Then add implementation todos
+   - Clearly state: "Switch to Agent mode to execute this plan"
+   
+   **In Agent Mode:**
+   - FIRST action: Create the task manifest
+   - SECOND action: Create task branches in all needed repos
+   - THIRD: Begin implementation
+
+5. **If on a protected branch** (main/dev/master, or **`multi-tenancy/phase-*`** when about to change code):
+
+   **In Plan Mode:**
+   - Your plan MUST start with: `[ ] Switch to/create task branch`
+   - Do NOT plan any code changes until branch is fixed
+   
+   **In Agent Mode:**
+   - STOP immediately
+   - Create or switch to task branch BEFORE any changes
+   - You may check out `multi-tenancy/phase-N` only to **pull** and **create a task branch** from it; do not commit or merge there without explicit approval (see Branch Protection).
+
+## Mode-Specific Behavior
+
+### Plan Mode (CRITICAL — Read This Carefully)
+
+In Plan mode, you CANNOT write files or run git commands. However, you MUST still respect task management in your plan.
+
+**Before proposing ANY implementation plan, check task management state:**
+
+1. **Check if task manifest exists:**
+   ```bash
+   cat /home/emad/Projects/Pilche/.cursor/current-task.yaml 2>/dev/null || echo "NO_ACTIVE_TASK"
+   ```
+
+2. **Check current branch state:**
+   ```bash
+   PILCHE=/home/emad/Projects/Pilche
+   for repo in playhouse-server playhouse-control-plane playhouse-web playhouse-cicd playhouse-docs playhouse-integration-driver; do
+     echo "$repo: $(git -C "$PILCHE/$repo" branch --show-current 2>/dev/null)"
+   done
+   ```
+
+**Your plan MUST include these prerequisite todos if needed:**
+
+| Condition | Required Todo at START of Plan |
+|-----------|-------------------------------|
+| No `current-task.yaml` exists | `[ ] Create task manifest (current-task.yaml)` |
+| Any needed repo is on `main`/`dev`/`master` or `multi-tenancy/phase-*` (for implementation) | `[ ] Create task branch in <repo> from <base>` |
+| Task manifest exists but no branches created | `[ ] Create task branches in affected repos` |
+| Branch exists but doesn't match manifest | `[ ] Switch to correct task branch in <repo>` |
+
+**Plan Mode Output Format:**
+
+```markdown
+## Task Management Prerequisites
+
+Based on current state:
+- Task manifest: [EXISTS / MISSING]
+- Branch state: [list any repos on protected branches]
+
+### Required Setup Steps (Do These First in Agent Mode)
+
+1. [ ] Create task manifest with:
+   - ID: YYYY-MM-DD-slug
+   - Type: feature/fix/refactor/etc
+   - Branch: type/slug
+   - Affected repos: list
+   
+2. [ ] Create task branch `<branch>` in:
+   - [ ] playhouse-web (from main)
+   - [ ] playhouse-server (from main)
+   - [ ] etc.
+
+---
+
+## Implementation Plan
+
+Now the actual implementation steps...
+
+3. [ ] First implementation item
+4. [ ] Second implementation item
+...
+```
+
+**Key Rule:** If task management prerequisites are not met, they MUST be the FIRST items in your todo list. Never plan implementation steps without addressing task/branch setup first.
+
+### Agent Mode
+
+- READ manifest at session start
+- CREATE manifest if none exists and user describes a task (this is the FIRST action)
+- CREATE task branches BEFORE any code changes
+- VERIFY not on protected branch before ANY edit
+- UPDATE manifest after every significant action:
+  - After creating branches
+  - After completing checklist items
+  - After committing changes
+  - After pushing to remote
+- SAVE manifest immediately after updates (don't batch)
+
+## Branch Protection (CRITICAL)
+
+**NEVER commit directly to protected branches.** All work MUST be done on task-specific branches.
+
+### Protected Branches
+- `main` — production branch (all repos)
+- `master` — legacy production branch (if present)
+- `dev` — development/staging branch (playhouse-control-plane)
+- **`multi-tenancy/phase-*`** — multi-tenancy **phase integration** branches (e.g. `multi-tenancy/phase-0`): **protected for merges and pushes** the same way as `main`/`dev` (see below).
+
+### Multi-tenancy phase integration branches
+
+For the **multi-tenancy program**, long-lived branches **`multi-tenancy/phase-0`**, **`multi-tenancy/phase-1`**, etc. hold integrated phase work **until that phase is complete**:
+
+- **Branch new tasks from** the current `multi-tenancy/phase-N` (after pulling), so each task includes prior phase commits.
+- **Merging into `multi-tenancy/phase-N`** (task branch → phase) and **`git push origin multi-tenancy/phase-N`** require **explicit user authorization** in the conversation — same bar as merging to `main`. Do **not** merge or push the phase branch because a task is "done" or todos are complete.
+- **When the phase is done:** Merge `multi-tenancy/phase-N` → `main` only with **explicit user approval** (same rule as any merge to `main`).
+- Treat `multi-tenancy/phase-*` as an integration line: **no direct commits**; integrate via merges only **after** the user approves each merge into the phase branch.
+
+See **git-branching** and **task-management** skills for details and manifest field `task.integration_branch`.
+
+### Merge and push to protected branches (MANDATORY)
+
+The agent MUST NOT `git merge` into `main`/`dev`/`master` **or into `multi-tenancy/phase-*`**, nor `git push` to those branches **without explicit user approval** in the current conversation. Phrases like "complete the task", "finish all todos", or completing a checklist item are **not** implicit approval — finish work on the **task branch**, then wait for a clear instruction (e.g. "merge my task into phase-0", "merge phase branch to main", "approved, push the merge") or provide merge/PR steps for the user to run.
+
+### Before ANY Code Change
+
+1. **Verify you are on the task branch:**
+   ```bash
+   PILCHE=/home/emad/Projects/Pilche
+   MANIFEST="$PILCHE/.cursor/current-task.yaml"
+   
+   for repo in playhouse-server playhouse-control-plane playhouse-web playhouse-cicd playhouse-docs playhouse-integration-driver; do
+     current=$(git -C "$PILCHE/$repo" branch --show-current 2>/dev/null)
+     # Get expected task_branch for this repo from manifest
+     expected=$(grep -A6 "^  $repo:" "$MANIFEST" | grep "task_branch:" | awk '{print $2}' | tr -d '"')
+     
+     protected=0
+     case "$current" in
+       main|master|dev)
+         protected=1
+         ;;
+       multi-tenancy/phase-*)
+         protected=1
+         ;;
+     esac
+     if [ "$protected" -eq 1 ]; then
+       echo "⛔ $repo is on PROTECTED branch: $current"
+     elif [ "$expected" = "null" ] || [ -z "$expected" ]; then
+       echo "○ $repo: no task branch assigned yet"
+     elif [ "$current" != "$expected" ]; then
+       echo "⚠️  $repo is on '$current', expected '$expected'"
+     else
+       echo "✓ $repo is on '$expected'"
+     fi
+   done
+   ```
+
+2. **If on a protected branch:**
+   - STOP immediately
+   - Switch to the task branch: `git checkout <task.branch>`
+   - If task branch doesn't exist, create it from the integration line: `git checkout multi-tenancy/phase-N && git pull && git checkout -b <task.branch>` (or from `main` when no phase task)
+   - NEVER proceed with changes while on `main`/`master`/`dev` or **`multi-tenancy/phase-*`**
+
+3. **If no active task exists:**
+   - Create a task manifest FIRST
+   - Create the task branch SECOND
+   - Only then begin implementation
+
+### Branch Naming Convention
+
+Task branches should follow the pattern: `<type>/<short-description>`
+
+Examples:
+- `feature/user-auth`
+- `fix/payment-validation`
+- `refactor/api-cleanup`
+
+## Before ANY Git Operation
+
+1. Re-read manifest to confirm:
+   - Which repos are involved (`repos.<name>.needed: true`)
+   - What branch name to use (`task.branch`)
+   - Current status of each repo
+2. **Verify current branch is NOT protected** (see above)
+3. Never assume — always verify against manifest
+
+## Sync Manifest with Git Reality
+
+When resuming a task, verify manifest matches actual git state:
+
+```bash
+PILCHE=/home/emad/Projects/Pilche
+for repo in playhouse-server playhouse-control-plane playhouse-web playhouse-cicd playhouse-docs playhouse-integration-driver; do
+  echo "=== $repo ==="
+  branch=$(git -C "$PILCHE/$repo" branch --show-current 2>/dev/null || echo "N/A")
+  changes=$(git -C "$PILCHE/$repo" status --porcelain 2>/dev/null | wc -l)
+  echo "branch: $branch, uncommitted: $changes"
+done
+```
+
+If manifest and git state diverge, update manifest to match reality.
+
+## Task Lifecycle Phases
+
+| Phase | Meaning |
+|-------|---------|
+| `planning` | Task scoped, manifest created, no branches yet |
+| `implementing` | Branches created, work in progress |
+| `reviewing` | Code complete, ready for review/PR |
+| `merging` | Approved, merging into main/dev |
+| `done` | Merged and complete |
+
+## Auto-Commit Policy (Checkpoint Commits)
+
+To preserve work without cluttering history, use **checkpoint commits** during implementation.
+
+### When to Auto-Commit
+
+| Trigger | Action | Commit Message Format |
+|---------|--------|----------------------|
+| Checklist item completed | Commit changes in that repo | `checkpoint(<item-id>): <description>` |
+| Switching to another repo | Commit current repo first | `wip(<task-id>): context switch to <other-repo>` |
+| End of session | Commit all uncommitted changes | `wip(<task-id>): session checkpoint` |
+| User explicitly requests | Normal commit | User-provided or conventional format |
+
+### Checkpoint Commit Workflow
+
+**After completing a checklist item:**
+
+```bash
+PILCHE=/home/emad/Projects/Pilche
+REPO="<checklist-item.repo>"
+ITEM_ID="<checklist-item.id>"
+DESCRIPTION="<checklist-item.description>"
+
+cd "$PILCHE/$REPO"
+
+# Verify on task branch (not protected)
+current=$(git branch --show-current)
+if [ "$current" = "main" ] || [ "$current" = "master" ] || [ "$current" = "dev" ]; then
+  echo "⛔ ABORT: On protected branch $current"
+  exit 1
+fi
+
+# Stage and commit
+git add -A
+git commit -m "checkpoint($ITEM_ID): $DESCRIPTION"
+
+# Update manifest
+# - Set checklist item status: done
+# - Set repos.<repo>.committed: true
+```
+
+**Before switching repos:**
+
+```bash
+# In current repo, if there are uncommitted changes:
+git add -A
+git commit -m "wip(<task.id>): context switch to <target-repo>"
+```
+
+**At end of session:**
+
+```bash
+PILCHE=/home/emad/Projects/Pilche
+TASK_ID="<task.id>"
+
+for repo in playhouse-server playhouse-control-plane playhouse-web playhouse-cicd playhouse-docs playhouse-integration-driver; do
+  cd "$PILCHE/$repo"
+  if [ -n "$(git status --porcelain)" ]; then
+    git add -A
+    git commit -m "wip($TASK_ID): session checkpoint"
+  fi
+done
+```
+
+### Before Creating PR: Clean Up History
+
+Before merging, clean up checkpoint/WIP commits:
+
+```bash
+cd "$PILCHE/$REPO"
+BASE_BRANCH="<repos.$repo.base_branch>"
+
+# Interactive rebase to squash/reword commits
+git rebase -i origin/$BASE_BRANCH
+
+# In the editor:
+# - Change 'pick' to 'squash' (s) for WIP commits
+# - Change 'pick' to 'reword' (r) to fix checkpoint messages
+# - Keep meaningful checkpoints as separate commits or squash all
+
+# After rebase, force push (safe on task branch)
+git push --force-with-lease origin <task_branch>
+```
+
+### Commit Message Conventions
+
+| Type | Format | When |
+|------|--------|------|
+| Checkpoint | `checkpoint(<item-id>): <description>` | After completing checklist item |
+| WIP | `wip(<task-id>): <reason>` | Context switch, session end |
+| Final | `<type>(<scope>): <description>` | After cleanup, ready for PR |
+
+**Final commit types** (conventional commits):
+- `feat`: New feature
+- `fix`: Bug fix
+- `refactor`: Code refactoring
+- `chore`: Maintenance tasks
+- `docs`: Documentation
+- `test`: Tests
+- `style`: Formatting, no code change
+
+### Example Commit History
+
+During implementation:
+```
+checkpoint(child-cards): Child list with age + special conditions
+wip(2026-04-13-entry-flow): context switch to playhouse-server
+checkpoint(api-endpoint): Add child metadata endpoint
+wip(2026-04-13-entry-flow): session checkpoint
+checkpoint(actions-row): EntryChildrenActions layout
+```
+
+After cleanup (ready for PR):
+```
+feat(entry-flow): add child selection stage with metadata display
+feat(api): add child metadata endpoint
+```
+
+## Quick Reference
+
+### Agent Mode
+- **New task?** → Create manifest first, then branches, NEVER work on main/dev
+- **Continuing?** → Read manifest, verify on task branch, sync with git, continue
+- **Switching repos?** → Checkpoint commit first, then switch
+- **Completed checklist item?** → Checkpoint commit, mark item done in manifest
+- **End of session?** → WIP commit all uncommitted changes
+- **Ready for PR?** → Clean up history with interactive rebase
+- **On protected branch?** → STOP, switch to task branch, then proceed
+
+### Plan Mode
+- **No manifest?** → First todo: "Create task manifest"
+- **On protected branch?** → First todo: "Create/switch to task branch"
+- **Missing branches?** → Add todos to create branches BEFORE implementation todos
+- **Always** → Task setup todos come FIRST, then implementation todos
+- **End of plan** → State "Switch to Agent mode to execute"

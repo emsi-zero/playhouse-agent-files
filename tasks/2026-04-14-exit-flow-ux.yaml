@@ -1,0 +1,59 @@
+task:
+  id: "2026-04-14-exit-flow-ux"
+  type: refactor
+  branch: "refactor/exit-flow-ux"
+  description: "Refactor exit flow UX — remove visit pricing section, merge pricing into payment status, collapsible payments list"
+  created: "2026-04-14T00:00:00Z"
+  phase: done
+
+repos:
+  playhouse-server:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-web:
+    needed: true
+    base_branch: main
+    task_branch: "refactor/exit-flow-ux"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: true
+  playhouse-control-plane:
+    needed: false
+    base_branch: dev
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-cicd:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-docs:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+
+checklist:
+  - id: refactor-modal
+    repo: playhouse-web
+    description: "SessionExitModal + CSS + i18n exit flow UX refactor"
+    status: done
+
+notes: |
+  Squash-merged to main as 5f91d28 refactor(visits): streamline exit flow charges and payment UI.
+  Local task branch deleted; no remote task branch was present.

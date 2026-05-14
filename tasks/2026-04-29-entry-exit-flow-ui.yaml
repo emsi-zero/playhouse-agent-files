@@ -1,0 +1,57 @@
+task:
+
+  id: "2026-04-29-entry-exit-flow-ui"
+
+  type: feature
+
+  branch: "feature/entry-exit-flow-ui"
+
+  description: "Entry/exit flow: compact dashboard back, drop locker summary in entry lockers, tablet density"
+
+  created: "2026-04-29T16:00:00Z"
+
+  merged_at: "2026-04-29"
+
+  phase: done
+
+  integration_branch: null
+
+
+
+repos:
+
+  playhouse-web:
+
+    needed: true
+
+    base_branch: main
+
+    task_branch: "feature/entry-exit-flow-ui"
+
+    branch_created: true
+
+    has_changes: true
+
+    committed: true
+
+    pushed: true
+
+
+
+checklist:
+
+  - id: entry-exit-ui
+
+    repo: playhouse-web
+
+    description: "Flow back icon, locker summary removal, responsive CSS"
+
+    status: done
+
+
+
+notes: >
+
+  Squash-merged to playhouse-web main as 26cd0e6.
+
+

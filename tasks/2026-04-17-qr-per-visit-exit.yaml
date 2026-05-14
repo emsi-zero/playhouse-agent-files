@@ -1,0 +1,73 @@
+task:
+  id: "2026-04-17-qr-per-visit-exit"
+  type: feature
+  branch: "feature/qr-per-visit-exit"
+  description: "Per-visit QR for customer exit lookup; remove child exit barcode security"
+  created: "2026-04-17T12:00:00Z"
+  phase: done
+
+repos:
+  playhouse-server:
+    needed: true
+    base_branch: main
+    task_branch: "feature/qr-per-visit-exit"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: true
+    merged_commit: "58ced94"
+  playhouse-web:
+    needed: true
+    base_branch: main
+    task_branch: "feature/qr-per-visit-exit"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: true
+    merged_commit: "57e71f3"
+  playhouse-control-plane:
+    needed: false
+    base_branch: dev
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-cicd:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-docs:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-integration-driver:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+
+checklist:
+  - id: qr-per-visit-impl
+    repo: playhouse-server
+    description: "Backend + tests for per-visit QR and child exit"
+    status: done
+  - id: qr-per-visit-web
+    repo: playhouse-web
+    description: "Frontend receipts, exit flow, remove child scan"
+    status: done
+
+notes: |
+  QR: PLAYHOUSE|v{id}|p{urlencoded_phone}|t{ts}. POST /visits/active/lookup-qr.
+  Merged to main 2026-04-17. Web history squashed to single commit on feature branch before FF merge.

@@ -1,0 +1,71 @@
+task:
+  id: "2026-04-15-pricing-ui-redesign"
+  type: feature
+  branch: "feature/pricing-ui-redesign"
+  description: "Admin pricing detail view — tier columns, price formatting, legend"
+  created: "2026-04-15T00:00:00Z"
+  phase: done
+  merged_at: "2026-04-15T00:00:00Z"
+  merge_commit_playhouse_web: "97174ef0e9d06a95b8878512e375f6c9392c513c"
+
+repos:
+  playhouse-server:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-web:
+    needed: true
+    base_branch: main
+    task_branch: "feature/pricing-ui-redesign"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: true
+    merged_to: main
+  playhouse-control-plane:
+    needed: false
+    base_branch: dev
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-cicd:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-docs:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+
+checklist:
+  - id: manifest-branch
+    repo: playhouse-web
+    description: "Task manifest + branch feature/pricing-ui-redesign"
+    status: done
+  - id: implement-ui
+    repo: playhouse-web
+    description: "Tier grid, price formatter, legend, CSS, tests"
+    status: done
+  - id: commit-push
+    repo: playhouse-web
+    description: "Commit Phase 1"
+    status: done
+
+notes: |
+  Squash-merged to main as 97174ef. Eight commits squashed to one feat(pricing) commit.
+  Local task branch deleted; remote feature branch was not present on origin.
+  Step-first tier grid, compact prices, ListDetailLayout independent scroll, i18n and tests.

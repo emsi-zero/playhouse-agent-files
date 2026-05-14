@@ -1,0 +1,44 @@
+task:
+  id: "2026-04-26-enable-gzip-compression"
+  type: feature
+  branch: "feature/enable-gzip-compression"
+  description: "Enable Django GZipMiddleware for API/JSON response compression (playhouse-server)"
+  created: "2026-04-26T00:00:00Z"
+  phase: done
+  integration_branch: null
+  merged:
+    at: "2026-04-26"
+    playhouse-server: "744bd3c"
+    into: main
+
+repos:
+  playhouse-server:
+    needed: true
+    base_branch: main
+    task_branch: "feature/enable-gzip-compression"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: true
+  playhouse-web:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+
+checklist:
+  - id: gzip-mw
+    repo: playhouse-server
+    description: "Add GZipMiddleware to config/settings.py"
+    status: done
+  - id: verify
+    repo: playhouse-server
+    description: "Verify gzip with curl/Accept-Encoding"
+    status: done
+
+notes: |
+  Django test client: GET /admin/login/ with Accept-Encoding: gzip returns Content-Encoding: gzip.
+  Merged to main; feature branch deleted.

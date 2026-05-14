@@ -1,0 +1,91 @@
+task:
+  id: "2026-04-20-integrations-redesign"
+  type: feature
+  branch: "feature/integrations-wizard"
+  description: "Integrations: driver name in detail; 2-step add integration wizard"
+  created: "2026-04-20T12:00:00Z"
+  phase: done
+  merged_at: "2026-04-20T00:00:00Z"
+  merge_note: "Also merged playhouse-server fix/integration-driver-snapshot (nested driver on integration API)."
+
+repos:
+  playhouse-server:
+    needed: true
+    base_branch: main
+    task_branch: "fix/integration-driver-snapshot"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: true
+    squash_merge_sha: "c15c81f"
+  playhouse-web:
+    needed: true
+    base_branch: main
+    task_branch: "feature/integrations-wizard"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: true
+    squash_merge_sha: "aa97f3b"
+  playhouse-control-plane:
+    needed: false
+    base_branch: dev
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-cicd:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-docs:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-integration-driver:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+
+checklist:
+  - id: task-setup
+    repo: playhouse-web
+    description: "Manifest + branch feature/integrations-wizard"
+    status: done
+  - id: driver-name-display
+    repo: playhouse-web
+    description: "IntegrationDetail driver name lookup"
+    status: done
+  - id: wizard
+    repo: playhouse-web
+    description: "IntegrationAddWizard + steps + IntegrationsListTab"
+    status: done
+  - id: i18n
+    repo: playhouse-web
+    description: "Wizard i18n keys EN/fa"
+    status: done
+  - id: test
+    repo: playhouse-web
+    description: "Run npm test"
+    status: done
+  - id: merge
+    repo: playhouse-server
+    description: "Squash-merge integration API to main"
+    status: done
+  - id: merge-web
+    repo: playhouse-web
+    description: "Squash-merge integrations UI to main"
+    status: done

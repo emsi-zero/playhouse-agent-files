@@ -1,0 +1,27 @@
+task:
+  id: "2026-04-17-auth-session-relogin-after-timeout"
+  type: fix
+  branch: "fix/session-cookie-stale-after-timeout"
+  description: "Clear Django session on token idle expiry and before login (users could not re-login until session cookie removed)"
+  created: "2026-04-17T00:00:00Z"
+  phase: done
+
+repos:
+  playhouse-server:
+    needed: true
+    base_branch: main
+    task_branch: "fix/session-cookie-stale-after-timeout"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: true
+
+checklist:
+  - id: session-logout-on-idle
+    repo: playhouse-server
+    description: "logout() on idle token expiry + before authenticate_and_login; regression test"
+    status: done
+
+notes: |
+  Merged to origin/main 2026-04-17 as bc6ffa6.
+  Related: locker open-on-assign 3f85684; nginx /ws/ proxy 4f3b69c (playhouse-cicd).

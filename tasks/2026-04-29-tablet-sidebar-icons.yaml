@@ -1,0 +1,27 @@
+task:
+  id: "2026-04-29-tablet-sidebar-icons"
+  type: feature
+  branch: "feature/tablet-sidebar-icons"
+  description: "Nav icons + collapsible tablet sidebar (60px/240px); double-activation toggle"
+  created: "2026-04-29T00:00:00Z"
+  merged_at: "2026-04-29"
+  phase: done
+  integration_branch: null
+
+repos:
+  playhouse-web:
+    needed: true
+    base_branch: main
+    task_branch: "feature/tablet-sidebar-icons"
+    branch_created: true
+    has_changes: true
+    committed: true
+    pushed: true
+
+checklist:
+  - id: nav-icons-registry
+    repo: playhouse-web
+    description: "navIcons.js + shell + CSS + tablet rail toggle"
+    status: done
+
+notes: "Squash-merged to main as 342f880."

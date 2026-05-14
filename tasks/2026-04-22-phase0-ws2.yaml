@@ -1,0 +1,120 @@
+task:
+  id: "2026-04-22-phase0-ws2"
+  type: feature
+  branch: "feature/tenant-context"
+  description: "Phase 0 WS-2: TenantContext — contextvars, tests, logging filter"
+  created: "2026-04-22T12:00:00Z"
+  phase: done
+  integration_branch: "multi-tenancy/phase-0"
+
+commit_policy:
+  auto_checkpoint: true
+  checkpoint_on_switch: true
+  checkpoint_on_session_end: true
+  squash_before_pr: true
+
+repos:
+  playhouse-server:
+    needed: true
+    base_branch: main
+    task_branch: "feature/tenant-context"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: true
+  playhouse-cicd:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-web:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-control-plane:
+    needed: false
+    base_branch: dev
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-docs:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-integration-driver:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+
+checklist:
+  - id: ws1-verify-services
+    repo: playhouse-cicd
+    description: "Verify control plane services (docker compose, health checks)"
+    status: done
+  - id: ws1-redis
+    repo: playhouse-cicd
+    description: "Add Redis to docker-compose.local.yml"
+    status: done
+  - id: ws1-deps
+    repo: playhouse-server
+    description: "Add hiredis to requirements (redis already present)"
+    status: done
+  - id: ws1-fixtures
+    repo: playhouse-server
+    description: "Create scripts/create_test_tenants.py and document /etc/hosts"
+    status: done
+  - id: ws1-env
+    repo: playhouse-server
+    description: "Add .env.example with tenancy and Redis vars"
+    status: done
+  - id: ws1-app
+    repo: playhouse-server
+    description: "Create apps/tenancy scaffold and INSTALLED_APPS"
+    status: done
+  - id: ws1-exceptions
+    repo: playhouse-server
+    description: "Define apps/tenancy/exceptions.py"
+    status: done
+  - id: ws1-docs
+    repo: playhouse-server
+    description: "Add apps/tenancy/README.md"
+    status: done
+  - id: ws2-context-core
+    repo: playhouse-server
+    description: "Implement apps/tenancy/context.py (TenantInfo, ContextVar, helpers, TenantContextFilter)"
+    status: done
+  - id: ws2-unit-tests
+    repo: playhouse-server
+    description: "Add apps/tenancy/tests/test_context.py (sync tests)"
+    status: done
+  - id: ws2-async-tests
+    repo: playhouse-server
+    description: "Add async isolation tests in test_context.py"
+    status: done
+  - id: ws2-verify
+    repo: playhouse-server
+    description: "Run pytest with coverage on apps.tenancy.context"
+    status: done
+
+notes: |
+  Closed 2026-04-22: feature/tenant-context was already merged into multi-tenancy/phase-0 locally
+  (merge 6ba4822). Pushed origin multi-tenancy/phase-0 (e7906d3..6ba4822). Local task branch deleted.
+
+  Next: new task from multi-tenancy/phase-0 for WS-3 (registry client).

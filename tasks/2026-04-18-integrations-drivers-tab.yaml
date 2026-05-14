@@ -1,0 +1,21 @@
+task:
+  id: "2026-04-18-integrations-drivers-tab"
+  type: feature
+  branch: "feature/integrations-drivers-tab"
+  description: "Merge Drivers into Integrations page with tabs; remove sidebar Drivers item"
+  phase: done
+  merged_to_main_at: "2026-04-18"
+
+repos:
+  playhouse-web:
+    needed: true
+    base_branch: main
+    task_branch: "feature/integrations-drivers-tab"
+    merge_commit: "cc3e6d1"
+    pushed: true
+
+checklist:
+  - id: routing-tabs
+    repo: playhouse-web
+    description: "AuthenticatedPanel + IntegrationsPage tabs and nested routes"
+    status: done

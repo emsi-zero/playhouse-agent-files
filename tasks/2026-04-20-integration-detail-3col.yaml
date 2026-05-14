@@ -1,0 +1,68 @@
+task:
+  id: "2026-04-20-integration-detail-3col"
+  type: feature
+  branch: "fix/integration-detail-3col"
+  description: "Integrations detail panel: 3-column grid on large screens"
+  created: "2026-04-20T00:00:00Z"
+  phase: done
+
+repos:
+  playhouse-web:
+    needed: true
+    base_branch: main
+    task_branch: "fix/integration-detail-3col"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: true
+    squash_merge_sha: "0fcb101"
+  playhouse-server:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-control-plane:
+    needed: false
+    base_branch: dev
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-cicd:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-docs:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-integration-driver:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+
+checklist:
+  - id: grid
+    repo: playhouse-web
+    description: "IntegrationDetail 3-col grid CSS + wiring"
+    status: done
+  - id: merge
+    repo: playhouse-web
+    description: "Squash-merge to main"
+    status: done

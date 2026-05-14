@@ -1,0 +1,62 @@
+task:
+  id: "2026-04-29-mid-entry-backend"
+  type: feature
+  branch: "feature/visit-mid-entry-backend"
+  description: "Backend: mid-entry child, entry_at, CHILD_MID_ENTRY, POST visit children"
+  created: "2026-04-29T14:00:00Z"
+  phase: done
+  merged_at: "2026-04-29"
+  merge_commit: "0160602"
+  integration_branch: null
+
+repos:
+  playhouse-server:
+    needed: true
+    base_branch: main
+    task_branch: "feature/visit-mid-entry-backend"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: true
+    merged_to: main
+  playhouse-web:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-control-plane:
+    needed: false
+    base_branch: dev
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-cicd:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-docs:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+
+checklist:
+  - id: api-mid-entry
+    repo: playhouse-server
+    description: "VisitChild.entry_at, POST /visits/:id/children, migrations, tests"
+    status: done
+
+notes: |
+  Merged to playhouse-server main 2026-04-29. Pairs with playhouse-web mid-entry UI task.

@@ -1,0 +1,38 @@
+task:
+  id: "2026-04-14-exit-flow-redesign"
+  type: feature
+  branch: "feature/exit-flow-redesign"
+  description: "Exit flow: collapsible pricing, utilities list, child row view, exit review stage"
+  created: "2026-04-14T00:00:00Z"
+  phase: done
+
+repos:
+  playhouse-web:
+    needed: true
+    base_branch: main
+    task_branch: "feature/exit-flow-redesign"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: true
+    merge_commit: "399c1b7"
+  playhouse-server:
+    needed: false
+    base_branch: main
+    task_branch: null
+  playhouse-control-plane:
+    needed: false
+    base_branch: dev
+    task_branch: null
+  playhouse-cicd:
+    needed: false
+  playhouse-docs:
+    needed: false
+
+checklist:
+  - id: exit-flow-ui
+    repo: playhouse-web
+    description: "Exit flow redesign — components, modal, i18n, CSS"
+    status: done
+
+notes: "Squash-merged to playhouse-web main as 399c1b7. Remote branch feature/exit-flow-redesign deleted."

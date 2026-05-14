@@ -1,0 +1,62 @@
+task:
+  id: "2026-04-29-mid-entry-add-child"
+  type: feature
+  branch: "feature/mid-entry-add-child"
+  description: "Mid-visit Add child modal: choose registered profile or inline new child"
+  created: "2026-04-29T12:00:00Z"
+  phase: done
+  merged_at: "2026-04-29"
+  merge_commit: "821c86c"
+  integration_branch: null
+
+repos:
+  playhouse-server:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-web:
+    needed: true
+    base_branch: main
+    task_branch: "feature/mid-entry-add-child"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: true
+    merged_to: main
+  playhouse-control-plane:
+    needed: false
+    base_branch: dev
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-cicd:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-docs:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+
+checklist:
+  - id: web-mid-entry-ui
+    repo: playhouse-web
+    description: "Add child modal: registered vs new child; API client; i18n"
+    status: done
+
+notes: |
+  Merged to main 2026-04-29. Backend already supported child_id on POST /visits/:id/children.

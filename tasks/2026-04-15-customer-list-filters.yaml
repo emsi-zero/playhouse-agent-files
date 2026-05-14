@@ -1,0 +1,31 @@
+task:
+  id: "2026-04-15-customer-list-filters"
+  type: feature
+  branch: "feature/customer-list-filters"
+  description: "Customer management list: search (q/phone) + status filter + filter panel"
+  created: "2026-04-15T12:00:00Z"
+  phase: done
+  merged_commit: "8b51a01"
+
+repos:
+  playhouse-web:
+    needed: true
+    base_branch: main
+    task_branch: "feature/customer-list-filters"
+    branch_created: true
+    has_changes: true
+    committed: true
+    pushed: true
+  playhouse-server:
+    needed: false
+    base_branch: main
+    task_branch: null
+
+checklist:
+  - id: customer-filters-web
+    repo: playhouse-web
+    description: "API, hook, CustomerFilterPanel, list UI, i18n, styles"
+    status: done
+
+notes: |
+  Squash-merged to main as 8b51a01. Local feature branch deleted; remote branch did not exist.

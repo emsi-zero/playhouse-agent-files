@@ -1,0 +1,81 @@
+task:
+  id: "2026-04-16-driver-registration"
+  type: feature
+  branch: "feature/driver-registration"
+  description: "Driver registration + WebSocket + execute_command + health lifecycle (Phases 1–4)"
+  created: "2026-04-16T00:00:00Z"
+  phase: done
+
+repos:
+  playhouse-server:
+    needed: true
+    base_branch: main
+    task_branch: "feature/driver-registration"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: true
+  playhouse-web:
+    needed: true
+    base_branch: main
+    task_branch: "feature/driver-registration"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: true
+  playhouse-control-plane:
+    needed: false
+    base_branch: dev
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-cicd:
+    needed: true
+    base_branch: main
+    task_branch: "feature/driver-registration"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: true
+  playhouse-integration-driver:
+    needed: true
+    base_branch: main
+    task_branch: "main"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: false
+  playhouse-docs:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+
+checklist:
+  - id: phase1-models
+    repo: playhouse-server
+    description: "Driver models and Integration.driver FK"
+    status: done
+  - id: phase1-rest
+    repo: playhouse-server
+    description: "Driver registration API + tests"
+    status: done
+  - id: phase3-execute
+    repo: playhouse-server
+    description: "WebSocket integration in execute_command + API driver_id + tests"
+    status: done
+  - id: phase4-health
+    repo: playhouse-server
+    description: "Health evaluation, Celery task, execute_command offline/unhealthy, health_summary API"
+    status: done
+
+notes: |
+  Phase 4: driver_health.py, evaluate_driver_health beat (1m), DRIVER_HEALTH_REPORT_MAX_AGE_SECONDS,
+  DRIVER_ALLOW_COMMANDS_WHEN_UNHEALTHY, audit DRIVER_HEALTH_STATUS_CHANGED, CommandResult driver_unhealthy/offline.
+  Full pytest: 348 passed.
+  Merge 2026-04-17: server/web/cicd pushed to origin/main; integration-driver had no origin — squashed to single commit on local main only.

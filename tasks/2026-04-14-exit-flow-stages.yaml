@@ -1,0 +1,58 @@
+task:
+  id: "2026-04-14-exit-flow-stages"
+  type: refactor
+  branch: "refactor/exit-flow-stages"
+  description: "3-stage exit flow: details, payment/financials, receipt"
+  created: "2026-04-14T00:00:00Z"
+  phase: done
+
+repos:
+  playhouse-server:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: true
+  playhouse-web:
+    needed: true
+    base_branch: main
+    task_branch: "refactor/exit-flow-stages"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: true
+  playhouse-control-plane:
+    needed: false
+    base_branch: dev
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: true
+  playhouse-cicd:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: true
+  playhouse-docs:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: true
+
+checklist:
+  - id: exit-stages
+    repo: playhouse-web
+    description: "SessionExitPaymentStage + SessionExitModal 3-stage wizard"
+    status: done
+
+notes: |
+  Linear: details → payment → receipt. Default variant unchanged (single view).

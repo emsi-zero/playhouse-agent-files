@@ -1,0 +1,38 @@
+task:
+  id: "2026-04-28-hide-exit-payment-actions-zero"
+  type: fix
+  branch: "fix/hide-exit-payment-actions-zero"
+  description: "Hide exit payment toolbar (round down, adjustment, record payment) when amount due is zero"
+  created_local: "2026-04-28"
+  phase: done
+  integration_branch: null
+
+repos:
+  playhouse-server:
+    needed: false
+    base_branch: main
+    task_branch: null
+  playhouse-web:
+    needed: true
+    base_branch: main
+    task_branch: "fix/hide-exit-payment-actions-zero"
+    branch_created: true
+    has_changes: true
+    committed: true
+    pushed: true
+  playhouse-control-plane:
+    needed: false
+  playhouse-cicd:
+    needed: false
+  playhouse-docs:
+    needed: false
+  playhouse-integration-driver:
+    needed: false
+
+checklist:
+  - id: hide-payment-actions
+    repo: playhouse-web
+    description: "Gate round down, adjustment, record payment on positive payable amount"
+    status: done
+
+notes: ""

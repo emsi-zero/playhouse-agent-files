@@ -1,0 +1,63 @@
+task:
+  id: "2026-04-14-customer-management-redesign"
+  type: feature
+  branch: "feature/customer-management-redesign"
+  description: "Customer management UI — list status, collapsible details, child cards, modal copy"
+  created: "2026-04-14T00:00:00Z"
+  phase: done
+  merged:
+    playhouse-web:
+      base_branch: main
+      commit: "7a9977e"
+      squash_message: "feat(customers): customer management UI redesign"
+
+repos:
+  playhouse-web:
+    needed: true
+    base_branch: main
+    task_branch: "feature/customer-management-redesign"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: true
+    merged_to_main: true
+  playhouse-server:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-control-plane:
+    needed: false
+    base_branch: dev
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-cicd:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-docs:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+
+checklist:
+  - id: cm-ui
+    repo: playhouse-web
+    description: "Customer list, details, children cards, modals, i18n, CSS"
+    status: done
+
+notes: "Merged to playhouse-web main 2026-04-14; task branch removed locally and on origin."

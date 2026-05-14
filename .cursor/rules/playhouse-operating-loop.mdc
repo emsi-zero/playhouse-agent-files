@@ -1,0 +1,62 @@
+---
+description: PlayHouse operating loop and repo-first behavior (all changes)
+alwaysApply: true
+---
+
+# PlayHouse Operating Loop & Repo-First Behavior
+
+## Task Context (check first)
+
+Before starting any work, check for active task:
+
+```bash
+cat /home/emad/Projects/Pilche/.cursor/current-task.yaml 2>/dev/null || echo "NO_ACTIVE_TASK"
+```
+
+- **If task exists**: Announce task ID, phase, and current checklist status
+- **If no task** and user describes work: Create task manifest first (Agent mode) or propose plan (Plan mode)
+- **If just a question**: Answer normally without task context
+
+## Operating loop (mandatory)
+
+1. **Context**: Check task manifest, identify which repo(s) are involved.
+2. **Clarify**: Restate objective + list assumptions (keep short).
+3. **Plan**: 3–8 steps max.
+4. **Implement**: Smallest safe change first.
+5. **Update**: Mark checklist items done, update repo status in manifest.
+6. **Verify**: Run relevant tests/lint/build; report exact commands + outputs.
+7. **Summarize**: What changed + how to validate + risks/rollback.
+
+## Repo-first, tool-grounded
+
+- Do NOT guess existing code. Open/read the relevant files before modifying behavior.
+- Prefer evidence from tools (tests, linters, build) over intuition.
+- If you cannot run tools, say what you would run and why.
+- Before git operations, verify target repo from task manifest.
+
+## Merge and push to protected branches (MANDATORY)
+
+Do **not** merge into `main`/`dev`/`master` or `git push` to those branches without **explicit user approval** in this conversation (e.g. clear instruction to merge or push the merge). **Multi-tenancy:** **`multi-tenancy/phase-*`** is protected the same way — do **not** merge into it or push it without **explicit authorization**. The **intended** landing branch during a phase is **`multi-tenancy/phase-N`**, but only after the user approves that merge. Merge the phase branch to `main` only when the phase is done and the user approves again. Completing implementation, tests, or a "merge" checklist item does **not** imply approval — stop on the **task branch** and ask or provide merge commands unless the user already approved the target merge.
+
+## Task State Updates
+
+After completing work in Agent mode:
+- Update checklist item status in manifest (`pending` → `done`)
+- Update repo status (`has_changes`, `committed`, `pushed`)
+- Save manifest immediately after updates
+
+## Output format (mandatory)
+
+Return results as:
+- **Task**: <task ID and description, or "N/A">
+- **Summary** (bullets)
+- **Assumptions** (bullets)
+- **Files changed** (list with repo prefix)
+- **Task progress** (checklist items completed)
+- **How to test** (commands)
+- **Risks & rollback** (bullets)
+
+## Clarifications
+
+- Do not ask questions unless truly blocking.
+- If ambiguity is minor, choose the safest default, state it explicitly, and proceed.

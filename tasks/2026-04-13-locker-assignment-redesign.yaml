@@ -1,0 +1,67 @@
+task:
+  id: "2026-04-13-locker-assignment-redesign"
+  type: feature
+  branch: "feature/locker-assignment-redesign"
+  description: "Card-based locker assignment UI with per-set quantity and summary"
+  created: "2026-04-13T00:00:00Z"
+  phase: done
+  merge_commit: "ec7988a"
+
+repos:
+  playhouse-server:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-web:
+    needed: true
+    base_branch: main
+    task_branch: "feature/locker-assignment-redesign"
+    branch_created: true
+    has_changes: true
+    committed: true
+    pushed: true
+  playhouse-control-plane:
+    needed: false
+    base_branch: dev
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-cicd:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-docs:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+
+checklist:
+  - id: locker-card-summary
+    repo: playhouse-web
+    description: "LockerSetCard + LockerAssignmentSummary + EntryLockerAssignmentStep refactor"
+    status: done
+  - id: i18n-styles
+    repo: playhouse-web
+    description: "i18n EN/FA + EntryFlow.module.css locker styles"
+    status: done
+  - id: tests-verify
+    repo: playhouse-web
+    description: "npm test + lint changed files"
+    status: done
+
+notes: |
+  Squash-merged to main as ec7988a. Remote task branch was never pushed; local branch deleted.

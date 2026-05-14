@@ -1,0 +1,35 @@
+---
+description: Preserve existing features when making changes
+alwaysApply: true
+---
+
+# Preserve Existing Features
+
+When implementing new features or making changes, existing functionality must not be broken or removed.
+
+## Rules
+
+1. **Never delete code that is unrelated to the current change.** If a block of code looks unused but is outside the scope of the task, leave it in place.
+2. **Before removing any code**, verify it is truly unused or replaced:
+   - Search for all call-sites / imports / references.
+   - Confirm no other feature depends on it.
+3. **Before overwriting a component, hook, or utility**, re-read the original file to understand all behaviors it provides — not just the one being changed.
+4. **If a refactor requires removing code**, explicitly list what is being removed and why before proceeding.
+
+## Examples
+
+```
+# ❌ BAD — Rewrites a component and silently drops an existing feature
+- Replaced UserPanel component; the "export CSV" button was removed
+  because the new implementation didn't account for it.
+
+# ✅ GOOD — Adds new behavior while keeping existing features intact
+- Extended UserPanel with new filtering controls.
+- Preserved the existing "export CSV" button and verified it still works.
+```
+
+## Checklist (before submitting a change)
+
+- [ ] All pre-existing features in modified files still function.
+- [ ] No unrelated code was deleted or commented out.
+- [ ] Any intentional removal is called out explicitly with justification.

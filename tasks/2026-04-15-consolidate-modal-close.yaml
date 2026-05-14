@@ -1,0 +1,32 @@
+task:
+  id: "2026-04-15-consolidate-modal-close"
+  type: fix
+  branch: "fix/consolidate-modal-close-buttons"
+  description: "Single modal header close (icon); remove duplicate body cancels"
+  created: "2026-04-15T00:00:00Z"
+  phase: done
+  completed: "2026-04-14"
+
+repos:
+  playhouse-web:
+    needed: true
+    base_branch: main
+    task_branch: "fix/consolidate-modal-close-buttons"
+    branch_created: true
+    has_changes: true
+    committed: true
+    pushed: false
+  playhouse-server:
+    needed: false
+    base_branch: main
+    task_branch: null
+
+checklist:
+  - id: modal-web
+    repo: playhouse-web
+    description: "Modal icon + remove duplicates + SessionLockersModal"
+    status: done
+
+notes: |
+  Merged to main locally (fix/consolidate-modal-close-buttons).
+  Plan: consolidate_modal_close_buttons_and_use_icon_a394bdef.

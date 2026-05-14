@@ -1,0 +1,61 @@
+task:
+  id: "2026-04-14-children-modal-redesign"
+  type: feature
+  branch: "feature/children-modal-redesign"
+  description: "Redesign session children modal with expandable cards (age, special conditions)"
+  created: "2026-04-14T00:00:00Z"
+  phase: done
+  merged_at: "2026-04-14"
+  merge_commit: "035fa74"
+
+repos:
+  playhouse-server:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-web:
+    needed: true
+    base_branch: main
+    task_branch: "feature/children-modal-redesign"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: true
+    merged_to: main
+  playhouse-control-plane:
+    needed: false
+    base_branch: dev
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-cicd:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-docs:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+
+checklist:
+  - id: children-modal-ui
+    repo: playhouse-web
+    description: "Expandable ChildCard, age utility, CSS, i18n, tests"
+    status: done
+
+notes: |
+  Squash-merged to main. Final UI: always-visible detail cards (collapsibility removed in follow-up).

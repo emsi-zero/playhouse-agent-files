@@ -1,0 +1,67 @@
+task:
+  id: "2026-04-14-entry-flow-followup"
+  type: refactor
+  branch: "refactor/entry-flow-followup"
+  description: "Split EntryFlowContext, optional payment Entered button, HTTP 400 for CHILD_CUSTOMER_MISMATCH"
+  created: "2026-04-14T12:00:00Z"
+  phase: done
+  merged_at: "2026-04-14"
+  merge_commits:
+    playhouse_server: "7e283cd"
+    playhouse_web: "8bccf08"
+
+repos:
+  playhouse-server:
+    needed: true
+    base_branch: main
+    task_branch: "refactor/entry-flow-followup"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: true
+  playhouse-web:
+    needed: true
+    base_branch: main
+    task_branch: "refactor/entry-flow-followup"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: true
+  playhouse-control-plane:
+    needed: false
+    base_branch: dev
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-cicd:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-docs:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+
+checklist:
+  - id: followup-all
+    repo: playhouse-server
+    description: "HTTP semantics + tests"
+    status: done
+  - id: followup-web
+    repo: playhouse-web
+    description: "Context split + Entered button + i18n"
+    status: done
+
+notes: |
+  Plan: entry_flow_refactors_c3c5f30a. Do not edit plan file.
+  Squash-merged to main 2026-04-14. Remote task branches did not exist (never pushed); local deleted.

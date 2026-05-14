@@ -1,0 +1,29 @@
+task:
+  id: "2026-04-16-pricing-two-stage-refactor"
+  type: refactor
+  branch: "feature/pricing-two-stage-refactor"
+  description: "Two-stage walk-in pricing wizard with card-based tier editor"
+  created: "2026-04-16T12:00:00Z"
+  phase: done
+  merged_at: "2026-04-16"
+
+repos:
+  playhouse-web:
+    needed: true
+    base_branch: main
+    task_branch: "feature/pricing-two-stage-refactor"
+    merge_commit: "26be60a"
+
+checklist:
+  - id: manifest-branch
+    repo: playhouse-web
+    description: "Task manifest + branch feature/pricing-two-stage-refactor"
+    status: done
+  - id: wizard-impl
+    repo: playhouse-web
+    description: "WalkinPlanWizard, tiers stage, hooks, styles, i18n, tests"
+    status: done
+
+notes: |
+  Squash-merged to playhouse-web main as 26be60a.
+  Remote task branch did not exist (local-only); local branch deleted.

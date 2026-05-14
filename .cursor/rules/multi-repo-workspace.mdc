@@ -1,0 +1,95 @@
+---
+description: Multi-repo workspace navigation and context awareness
+alwaysApply: true
+---
+
+# PlayHouse Multi-Repo Workspace
+
+This workspace contains multiple related repositories. Always be aware of which repo you're working in.
+
+## Repository Structure
+
+| Repo | Purpose | Stack | Key Paths |
+|------|---------|-------|-----------|
+| `playhouse-web` | Customer-facing React app | React/JS | `src/features/`, `src/components/` |
+| `playhouse-server` | Django API backend | Python/Django | `apps/`, `manage.py` |
+| `playhouse-control-plane` | Admin UI + Go services | Go + React | `cmd/`, `web/` |
+| `playhouse-cicd` | Docker, compose, deployment | YAML/Shell | `docker-compose*.yml` |
+| `playhouse-docs` | Documentation | Markdown | `*.md` |
+| `playhouse-integration-driver` | On-prem integration driver (lockers / hardware) | Go | `cmd/`, `internal/` |
+
+## Context Determination (Before Any Task)
+
+1. **If user mentions a file path** → derive repo from the path prefix
+2. **If user mentions a feature** → identify which repo(s) own it:
+   - UI/frontend features → `playhouse-web`
+   - API/backend features → `playhouse-server`
+   - Admin features → `playhouse-control-plane`
+   - Deployment/infra → `playhouse-cicd`
+   - On-prem driver / edge agent → `playhouse-integration-driver`
+3. **If ambiguous** → ASK which repo before proceeding
+4. **If cross-repo** → list all affected repos upfront and handle each explicitly
+
+## Git Operations (Multi-Repo Critical)
+
+### Before Any Git Command
+
+- Always verify you're in the correct repo directory
+- Use `working_directory` parameter or explicit `cd` to target the right repo
+- Never assume cwd is correct
+
+### Branch Creation
+
+- Announce: "Creating branch `<name>` in `playhouse-X`"
+- For cross-repo features, use the SAME branch name in all affected repos
+
+### Before Committing
+
+Run status check across all repos to see uncommitted changes:
+
+```bash
+for d in /home/emad/Projects/Pilche/playhouse-*; do
+  status=$(git -C "$d" status --porcelain 2>/dev/null)
+  if [ -n "$status" ]; then
+    echo "=== $(basename $d) has changes ==="
+    echo "$status" | head -10
+  fi
+done
+```
+
+### Commit Sequencing (Cross-Repo Features)
+
+When changes span multiple repos, commit in dependency order:
+1. **Backend first**: `playhouse-server`, `playhouse-control-plane`
+2. **Frontend second**: `playhouse-web`
+3. **Infrastructure last**: `playhouse-cicd`
+4. **Driver / edge agent** (when touched): `playhouse-integration-driver` (often paired with `playhouse-server` API contract changes)
+
+### Merge and push to base branches
+
+Do **not** merge into `main`/`dev` or push to those remotes without **explicit user approval** in the conversation. For **multi-tenancy**, **`multi-tenancy/phase-*`** is **also protected**: do **not** merge task branches into the phase line or push it without **explicit authorization** (same as `main`). When the user approves, land tasks on **`multi-tenancy/phase-N`** during the phase; merge that phase branch to `main` only when the phase completes and the user approves again. See `task-context.mdc` and the `task-management` / `git-branching` skills.
+
+## Working Directory Commands
+
+Always use absolute paths or the `working_directory` parameter:
+
+```bash
+# Good - explicit working directory
+git -C /home/emad/Projects/Pilche/playhouse-web status
+
+# Good - using working_directory parameter in Shell tool
+working_directory: "/home/emad/Projects/Pilche/playhouse-server"
+command: "git status"
+```
+
+## Quick Reference Paths
+
+```
+/home/emad/Projects/Pilche/
+├── playhouse-web/          # React frontend
+├── playhouse-server/       # Django backend
+├── playhouse-control-plane/ # Admin + Go services
+├── playhouse-cicd/         # Docker/deployment
+├── playhouse-docs/         # Documentation
+└── playhouse-integration-driver/  # On-prem Go driver
+```

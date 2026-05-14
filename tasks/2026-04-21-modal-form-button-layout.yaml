@@ -1,0 +1,22 @@
+task:
+  id: 2026-04-21-modal-form-button-layout
+  description: Shared RTL-aware modal/form action rows; align Enter without pay and standardize footers
+  type: feature
+  branch: feature/modal-form-button-layout
+  phase: done
+
+repos:
+  playhouse-web:
+    needed: true
+    base_branch: main
+    task_branch: feature/modal-form-button-layout
+    merged_commit: f3199f9
+    pushed: true
+
+checklist:
+  - id: modal-actions-css
+    description: Add ModalActions.module.css and compose across features
+    status: done
+  - id: entry-single-page-enter
+    description: singlePageEnterWithoutPayRow flex-end RTL
+    status: done

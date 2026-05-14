@@ -1,0 +1,68 @@
+task:
+  id: "2026-04-16-exit-receipt-children-stay"
+  type: feature
+  branch: "feature/exit-receipt-children-stay"
+  description: "Exit receipt: remove QR; list children with per-child stay time"
+  created: "2026-04-16T12:00:00Z"
+  phase: done
+
+commit_policy:
+  auto_checkpoint: true
+  checkpoint_on_switch: true
+  checkpoint_on_session_end: true
+  squash_before_pr: true
+
+repos:
+  playhouse-server:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-web:
+    needed: true
+    base_branch: main
+    task_branch: "feature/exit-receipt-children-stay"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: true
+  playhouse-control-plane:
+    needed: false
+    base_branch: dev
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-cicd:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-docs:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+
+checklist:
+  - id: template-exit-children
+    repo: playhouse-web
+    description: "VisitReceiptTemplate exit children list + stay time; i18n"
+    status: done
+
+notes: |
+  Stay = minutes from visit entry_at to child exited_at.
+
+merged_at: "2026-04-16"
+merged_commits:
+  playhouse-web: "03b0878"

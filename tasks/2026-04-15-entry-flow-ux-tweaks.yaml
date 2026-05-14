@@ -1,0 +1,68 @@
+task:
+  id: "2026-04-15-entry-flow-ux-tweaks"
+  type: feature
+  branch: "feature/entry-flow-ux-tweaks"
+  description: "Entry flow copy, duration layout, unpaid without duration, banned lookup, payment bold"
+  created: "2026-04-15T00:00:00Z"
+  phase: done
+
+repos:
+  playhouse-server:
+    needed: true
+    base_branch: main
+    task_branch: "feature/entry-flow-ux-tweaks"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: true
+  playhouse-web:
+    needed: true
+    base_branch: main
+    task_branch: "feature/entry-flow-ux-tweaks"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: true
+  playhouse-control-plane:
+    needed: false
+    base_branch: dev
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-cicd:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-docs:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+
+checklist:
+  - id: manifest-branch
+    repo: multi
+    description: "Manifest + branches feature/entry-flow-ux-tweaks"
+    status: done
+  - id: server-entry-duration
+    repo: playhouse-server
+    description: "Visit entry optional duration, default from settings, banned customer"
+    status: done
+  - id: web-entry-ui
+    repo: playhouse-web
+    description: "i18n, layout, submit, lookup, CSS"
+    status: done
+
+notes: |
+  Merged to main (squash per repo): playhouse-server b8090d6, playhouse-web e70eede.
+  Local task branches deleted; remote feature branches were not present on origin.
+  Unpaid entry omits duration → API uses first configured duration option (default list starts at 30).

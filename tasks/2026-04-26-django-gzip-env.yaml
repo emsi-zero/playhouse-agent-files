@@ -1,0 +1,14 @@
+task:
+  id: "2026-04-26-django-gzip-env"
+  type: chore
+  branch: "chore/django-gzip-env-toggle"
+  description: "Make GZipMiddleware optional via DJANGO_ENABLE_GZIP; document in .env.example"
+  created: "2026-04-26T00:00:00Z"
+  phase: done
+  merged:
+    at: "2026-04-26"
+    playhouse-server: "47fb10b"
+    into: main
+
+notes: |
+  Task branch deleted. Optional gzip when reverse proxy already compresses.

@@ -1,0 +1,67 @@
+task:
+  id: "2026-04-13-entry-discount-apply-remove"
+  type: fix
+  branch: "fix/entry-discount-apply-remove"
+  description: "Merge discount check/apply into single apply button; remove shows as secondary when applied"
+  created: "2026-04-13T00:00:00Z"
+  phase: done
+  merge_commit: "f15586d"
+
+repos:
+  playhouse-server:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-web:
+    needed: true
+    base_branch: main
+    task_branch: "fix/entry-discount-apply-remove"
+    branch_created: true
+    has_changes: true
+    committed: true
+    pushed: true
+  playhouse-control-plane:
+    needed: false
+    base_branch: dev
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-cicd:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-docs:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+
+checklist:
+  - id: manifest-branch
+    repo: playhouse-web
+    description: "Task manifest + task branch"
+    status: done
+  - id: refactor-discount-ui
+    repo: playhouse-web
+    description: "EntryDiscountSection single apply/remove button + i18n"
+    status: done
+  - id: validate-flow
+    repo: playhouse-web
+    description: "Lint / verify payment sync on remove"
+    status: done
+
+notes: |
+  Merged to playhouse-web main as f15586d. Remote task branch was never pushed; local branch deleted.

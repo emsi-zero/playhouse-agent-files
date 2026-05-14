@@ -1,0 +1,19 @@
+task:
+  id: 2026-04-21-pricing-time-unit-label
+  description: Rename pricing step label from Billing unit to Time unit (i18n)
+  type: feature
+  branch: feature/pricing-time-unit-label
+  phase: done
+
+repos:
+  playhouse-web:
+    needed: true
+    base_branch: main
+    task_branch: feature/pricing-time-unit-label
+    merged_commit: f5b759b
+    pushed: true
+
+checklist:
+  - id: i18n-label
+    description: pricingStepTimeUnit EN/fa + update pricing components
+    status: done

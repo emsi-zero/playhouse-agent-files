@@ -1,0 +1,13 @@
+# Archived after squash-merge to main (no prior current-task.yaml existed)
+id: 2026-04-18-driver-management-enhancements
+description: Driver management enhancements (pending setup codes, delete/enable/disable, revoke pending)
+branch: feature/driver-management-enhancements
+phase: done
+merged_at: "2026-04-18"
+repos:
+  playhouse-server:
+    base_branch: main
+    commit: "177fc67"
+  playhouse-web:
+    base_branch: main
+    commit: "6f2d167"

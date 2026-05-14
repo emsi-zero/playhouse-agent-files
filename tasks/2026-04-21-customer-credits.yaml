@@ -1,0 +1,24 @@
+task:
+  id: "2026-04-21-customer-credits"
+  type: feature
+  branch: "feature/customer-credits"
+  description: "Stored customer credits (E7-1/E7-2): wallet + ledger, issue on payment, consume at visit exit"
+  created: "2026-04-21T00:00:00Z"
+  phase: done
+  merged_at: "2026-04-21"
+
+repos:
+  playhouse-server:
+    needed: true
+    base_branch: main
+    merge_commit: "abb3f15cda80802496d2b44966132bcd948e7e20"
+    pushed: true
+  playhouse-web:
+    needed: true
+    base_branch: main
+    merge_commit: "45bfd45"
+    pushed: true
+
+notes: |
+  Squash-merged to main 2026-04-21. Remote feature branch may not exist on server (never pushed).
+  Web: if origin still has feature/customer-credits, delete with: git push origin --delete feature/customer-credits

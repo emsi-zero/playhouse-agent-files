@@ -1,0 +1,79 @@
+# Task Manifest Template
+# Copy this to /home/emad/Projects/Pilche/.cursor/current-task.yaml and fill in
+
+task:
+  id: "YYYY-MM-DD-short-description"    # e.g., "2024-04-13-payment-refunds"
+  type: feature                          # feature|fix|hotfix|refactor|chore|docs|test
+  branch: "feature/short-description"    # Same name used in all repos
+  description: "Human-readable description of the task"
+  created: "YYYY-MM-DDTHH:MM:SSZ"        # ISO 8601 timestamp
+  phase: planning                        # planning|implementing|reviewing|merging|done
+  # Multi-tenancy: intended landing branch for the phase (e.g. multi-tenancy/phase-0).
+  # Merging or pushing that branch requires explicit user approval (same as main).
+  # null when tasks merge only to repos.<name>.base_branch.
+  integration_branch: null               # e.g. "multi-tenancy/phase-0"
+
+# Auto-commit policy: checkpoint commits preserve work without cluttering history
+commit_policy:
+  auto_checkpoint: true          # Commit after completing checklist items
+  checkpoint_on_switch: true     # Commit before switching to another repo
+  checkpoint_on_session_end: true # Commit uncommitted changes at end of session
+  squash_before_pr: true         # Clean up checkpoint/WIP commits before PR
+
+repos:
+  playhouse-server:
+    needed: false           # Set true if this repo is part of the task
+    base_branch: main       # Branch to merge into (protected)
+    task_branch: null       # Set to actual branch name once created
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-web:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-control-plane:
+    needed: false
+    base_branch: dev        # Note: control-plane uses dev as base
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-cicd:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-docs:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+
+checklist:
+  # Add work items here, ordered by dependency (backend before frontend)
+  # - id: unique-item-id
+  #   repo: playhouse-server
+  #   description: "What needs to be done"
+  #   status: pending          # pending|in_progress|done|blocked
+  
+  - id: example-item
+    repo: playhouse-server
+    description: "Example checklist item - delete and replace with real items"
+    status: pending
+
+notes: |
+  Add any relevant context, decisions, constraints, or links here.
+  This section persists across sessions and helps maintain context.

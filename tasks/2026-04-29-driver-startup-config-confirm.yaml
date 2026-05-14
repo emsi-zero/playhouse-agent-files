@@ -1,0 +1,26 @@
+task:
+  id: "2026-04-29-driver-startup-config-confirm"
+  type: feature
+  branch: "feature/driver-startup-config-confirm"
+  description: "Prompt to confirm or reset saved driver configuration on startup (no-arg)"
+  created: "2026-04-29T12:00:00Z"
+  phase: done
+  integration_branch: null
+  merged_at: "2026-04-29"
+
+repos:
+  playhouse-inteegration-driver:
+    needed: true
+    base_branch: main
+    task_branch: "feature/driver-startup-config-confirm"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: true
+    merge_commit: "dc8f37b"
+
+checklist:
+  - id: startup-prompt
+    description: "Interactive confirmation / wipe + setup when config exists"
+    status: done
+    repo: playhouse-inteegration-driver

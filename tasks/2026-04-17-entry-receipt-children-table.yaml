@@ -1,0 +1,28 @@
+task:
+  id: "2026-04-17-entry-receipt-children-table"
+  type: feature
+  branch: "feature/entry-receipt-children-table"
+  description: "Entry receipt: children list as table (shape aligned with exit receipt)"
+  created: "2026-04-17T21:00:00Z"
+  phase: done
+
+repos:
+  playhouse-server:
+    needed: false
+    base_branch: main
+    merged_note: "fix/qr-lookup-inactive-details merged to main same session (8aedaae) — VISIT_NOT_ACTIVE details"
+  playhouse-web:
+    needed: true
+    base_branch: main
+    task_branch: "feature/entry-receipt-children-table"
+    merged_commit: "cd09505"
+    pushed: true
+
+checklist:
+  - id: entry-receipt-table
+    repo: playhouse-web
+    description: "VisitReceiptTemplate entry children as table + i18n"
+    status: done
+
+notes: |
+  Merged to main 2026-04-17. Remote task branches were not present (delete reported missing).

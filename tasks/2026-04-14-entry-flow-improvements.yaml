@@ -1,0 +1,58 @@
+task:
+  id: "2026-04-14-entry-flow-improvements"
+  type: chore
+  branch: "chore/entry-flow-improvements"
+  description: "Entry flow: disable continue without child, optional emergency labels, RTL progress arrows"
+  created: "2026-04-14T00:00:00Z"
+  phase: done
+
+repos:
+  playhouse-server:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-web:
+    needed: true
+    base_branch: main
+    task_branch: "chore/entry-flow-improvements"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: true
+  playhouse-control-plane:
+    needed: false
+    base_branch: dev
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-cicd:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-docs:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+
+checklist:
+  - id: entry-improvements
+    repo: playhouse-web
+    description: "Continue disabled, optional emergency labels, RTL EntryProgressBar"
+    status: done
+
+notes: |
+  Merged to main 2026-04-15. Remote task branch was not present (local-only branch).

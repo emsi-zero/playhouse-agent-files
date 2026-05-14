@@ -1,0 +1,40 @@
+task:
+  id: "2026-04-16-flow-type-setting"
+  type: feature
+  branch: "feature/flow-type-setting"
+  description: "Entry & exit flow type (wizard vs single-page) settings and single-page entry UI"
+  created: "2026-04-16T00:00:00Z"
+  phase: done
+  merged_at: "2026-04-16"
+
+repos:
+  playhouse-server:
+    needed: true
+    base_branch: main
+    task_branch: "feature/flow-type-setting"
+    merged_commit: "b6174ef"
+    pushed: true
+  playhouse-web:
+    needed: true
+    base_branch: main
+    task_branch: "feature/flow-type-setting"
+    merged_commit: "7c82752"
+    pushed: true
+
+checklist:
+  - id: backend-settings
+    repo: playhouse-server
+    description: "Registry + validation + get_entry_visit_settings"
+    status: done
+  - id: web-flow-ui
+    repo: playhouse-web
+    description: "FlowTypeSettingsCard, SinglePageEntryFlow, routing, exit"
+    status: done
+  - id: single-page-locker-chain
+    repo: playhouse-web
+    description: "Single-page entry: lockers before payment; postVisitEntry then createVisitUtilityAssignments in one click; retry path"
+    status: done
+
+notes: |
+  Merged to main (playhouse-server, playhouse-web). Task branches deleted locally.
+  Remote task branch did not exist on origin (local-only branches).

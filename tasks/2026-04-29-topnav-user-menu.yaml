@@ -1,0 +1,77 @@
+task:
+  id: "2026-04-29-topnav-user-menu"
+  type: feature
+  branch: "feature/topnav-user-menu"
+  description: "Top nav user account dropdown and language toggle abbreviations"
+  created: "2026-04-29T00:00:00Z"
+  phase: done
+  integration_branch: null
+
+commit_policy:
+  auto_checkpoint: true
+  checkpoint_on_switch: true
+  checkpoint_on_session_end: true
+  squash_before_pr: true
+
+repos:
+  playhouse-server:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-web:
+    needed: true
+    base_branch: main
+    task_branch: "feature/topnav-user-menu"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: true
+  playhouse-control-plane:
+    needed: false
+    base_branch: dev
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-cicd:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-docs:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-inteegration-driver:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+
+checklist:
+  - id: topnav-user-dropdown-lang-abbr
+    repo: playhouse-web
+    description: "User menu dropdown with avatar; language toggle EN/FA with abbr"
+    status: done
+
+notes: |
+  UI-only in playhouse-web TopNavBar and LanguageToggle.
+  Merged to main: e2303a7 (squash on feature/topnav-user-menu).
+
+merged_at: "2026-04-29"
+merge_commit: "e2303a7"

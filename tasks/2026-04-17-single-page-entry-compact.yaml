@@ -1,0 +1,65 @@
+task:
+  id: "2026-04-17-single-page-entry-compact"
+  type: feature
+  branch: "feature/single-page-entry-compact"
+  description: "Single-page entry: Enter without pay above payment section, collapsed payment by default, compact customer row"
+  created: "2026-04-17T00:00:00Z"
+  phase: done
+
+repos:
+  playhouse-web:
+    needed: true
+    base_branch: main
+    task_branch: "feature/single-page-entry-compact"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: true
+  playhouse-server:
+    needed: true
+    base_branch: main
+    task_branch: "feature/single-page-entry-compact"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: true
+  playhouse-control-plane:
+    needed: false
+    base_branch: dev
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-cicd:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-integration-driver:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-docs:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+
+checklist:
+  - id: single-page-ui
+    repo: playhouse-web
+    description: "Enter without pay placement, collapsed payment, compact customer"
+    status: done
+
+notes: "Merged to main: playhouse-server 813fc43, playhouse-web c086fc9 (2026-04-17)."

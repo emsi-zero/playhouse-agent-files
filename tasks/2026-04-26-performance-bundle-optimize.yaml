@@ -1,0 +1,36 @@
+task:
+  id: "2026-04-26-performance-bundle-optimize"
+  type: feature
+  branch: "feature/performance-bundle-optimize"
+  description: "Route-level code splitting and lazy heavy deps (playhouse-web)"
+  created: "2026-04-26T00:00:00Z"
+  phase: done
+  integration_branch: null
+  merged:
+    at: "2026-04-26"
+    playhouse-web: "3b46df2"
+    into: main
+
+repos:
+  playhouse-web:
+    needed: true
+    base_branch: main
+    task_branch: "feature/performance-bundle-optimize"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: true
+
+checklist:
+  - id: route-lazy
+    repo: playhouse-web
+    description: "React.lazy + Suspense in AuthenticatedPanel"
+    status: done
+  - id: deps
+    repo: playhouse-web
+    description: "Lazy zxing, recharts chunks, date-picker; remove qrcode.react; craco ignoreOrder"
+    status: done
+
+notes: |
+  Remove dead VisitReceiptTemplate.js (was unused; had been only consumer of qrcode.react).
+  Merged to main via fast-forward; task branch deleted local + remote.
