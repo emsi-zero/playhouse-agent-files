@@ -4,8 +4,9 @@ task:
   branch: "feature/static-fonts"
   description: "Self-host fonts (replace Google Fonts CDN) in playhouse-web; tighten receipt renderer tests."
   created: "2026-05-23T17:00:00Z"
-  phase: reviewing
+  phase: done
   integration_branch: null
+  merged_at: "2026-05-23T14:15:00Z"
 
 commit_policy:
   auto_checkpoint: true
@@ -21,7 +22,8 @@ repos:
     branch_created: true
     has_changes: true
     committed: true
-    pushed: false
+    pushed: true
+    main_commit: "63fc401"
   playhouse-web:
     needed: true
     base_branch: main
@@ -29,7 +31,8 @@ repos:
     branch_created: true
     has_changes: true
     committed: true
-    pushed: false
+    pushed: true
+    main_commit: "218c0f3"
   playhouse-control-plane:
     needed: false
     base_branch: dev
@@ -74,4 +77,5 @@ checklist:
     status: done
 
 notes: |
-  Branches created from main per plan. Merge to main deferred until user approval.
+  Merged feature/static-fonts → main (fast-forward) in playhouse-server then playhouse-web; pushed origin/main.
+  Remote task branch was never pushed; local task branch deleted after merge.
