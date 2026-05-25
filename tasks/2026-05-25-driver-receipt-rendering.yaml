@@ -1,0 +1,63 @@
+task:
+  id: "2026-05-25-driver-receipt-rendering"
+  type: feature
+  branch: "feature/driver-side-receipt-rendering"
+  description: "Driver-side receipt rendering: JSON templates, layout engine, ESC/POS; server v2 + web client"
+  created: "2026-05-25T00:00:00Z"
+  phase: reviewing
+
+  repos:
+  playhouse-integration-driver:
+    needed: true
+    base_branch: main
+    task_branch: "feature/driver-side-receipt-rendering"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: false
+  playhouse-server:
+    needed: true
+    base_branch: main
+    task_branch: "feature/driver-side-receipt-rendering"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: false
+  playhouse-web:
+    needed: true
+    base_branch: main
+    task_branch: "feature/driver-side-receipt-rendering"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: false
+
+checklist:
+  - id: branches
+    description: "Task manifest + feature branches in driver, server, web"
+    repo: ".cursor"
+    status: done
+  - id: phases-1-4
+    description: "Driver receipts package + dual print + WS templates"
+    repo: "playhouse-integration-driver"
+    status: done
+  - id: phase-5
+    description: "Server print-via-driver-v2 + templates message"
+    repo: "playhouse-server"
+    status: done
+  - id: phase-6
+    description: "Web v2 print API + rendering mode setting"
+    repo: "playhouse-web"
+    status: done
+  - id: layout-compact
+    description: "Compact receipt layout with QR code near customer details"
+    repo: "playhouse-integration-driver"
+    status: done
+  - id: row-table-support
+    description: "Add row/table layout support for multi-column receipt items"
+    repo: "playhouse-integration-driver"
+    status: done
+  - id: receipt-vertical-spacing
+    description: "Tighter vertical spacing (canvas, grid, embedded entry/exit templates)"
+    repo: "playhouse-integration-driver"
+    status: done
