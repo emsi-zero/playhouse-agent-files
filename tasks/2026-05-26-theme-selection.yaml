@@ -1,0 +1,81 @@
+task:
+  id: "2026-05-26-theme-selection"
+  type: feature
+  branch: "feature/ui-theme-selection"
+  description: "Theme selection – vibrant sage & rose vs warm brown & cream (system settings + API)"
+  created: "2026-05-26T12:00:00Z"
+  phase: done
+  integration_branch: null
+
+repos:
+  playhouse-server:
+    needed: true
+    base_branch: main
+    task_branch: "feature/ui-theme-selection"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: true
+  playhouse-web:
+    needed: true
+    base_branch: main
+    task_branch: "feature/sage-rose-palette"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: true
+  playhouse-control-plane:
+    needed: false
+    base_branch: dev
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-cicd:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-docs:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-integration-driver:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+
+checklist:
+  - id: backend-api
+    repo: playhouse-server
+    description: "display.ui_theme registry, validation, login/me, API tests"
+    status: done
+  - id: web-theme-ui
+    repo: playhouse-web
+    description: "Theme variables, ThemeSettingsCard, useAuth/App, charts, i18n"
+    status: done
+  - id: manual-qa-themes
+    repo: playhouse-web
+    description: "Spot-check both themes on dashboard, entry, reports, settings"
+    status: pending
+
+notes: |
+  Server branch: feature/ui-theme-selection (from main).
+  Web branch: feature/sage-rose-palette (palette + theme picker).
+  Light themes: vibrant-sage-rose, warm-brown-cream, cool-blue-coral.
+  Dark themes: vibrant-sage-rose-dark, warm-brown-cream-dark, cool-blue-coral-dark (labels e.g. Moonlit sage & rose).
+  Modal backdrop uses --ph-scrim-rgb; light themes set scrim ≈ ink.
+  Theme cards: responsive CSS grid, compact vertical layout.
+  No merge/push to main without explicit approval.
