@@ -1,0 +1,49 @@
+task:
+  id: "2026-05-26-organization-profile"
+  type: feature
+  branch: "feature/organization-profile"
+  description: "Organization profile, branding, bootstrap + settings (name, logo, business type, contacts)"
+  created: "2026-05-26T20:30:00Z"
+  phase: done
+  integration_branch: null
+  merged: "2026-05-26"
+
+repos:
+  playhouse-server:
+    needed: true
+    base_branch: main
+    task_branch: "feature/organization-profile"
+    branch_created: true
+    has_changes: true
+    merged_commit: "32a1375"
+    committed: true
+    pushed: true
+  playhouse-web:
+    needed: true
+    base_branch: main
+    task_branch: "feature/organization-profile"
+    branch_created: true
+    has_changes: true
+    merged_commit: "5444832"
+    committed: true
+    pushed: true
+  playhouse-docs:
+    needed: true
+    base_branch: main
+    merged_commit: "5eed0f0"
+    committed: true
+    pushed: true
+
+checklist:
+  - id: backend-org
+    repo: playhouse-server
+    description: "Registry, bootstrap, logo upload, auth organization payload, tests"
+    status: done
+  - id: frontend-org
+    repo: playhouse-web
+    description: "Bootstrap form, settings card, header, i18n, API clients"
+    status: done
+
+notes: |
+  Business type immutable after bootstrap. Plan: SystemSetting keys organization.*.
+  playhouse-docs: added organization-profile.md (media URLs, bootstrap, keys).
