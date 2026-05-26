@@ -1,0 +1,38 @@
+task:
+  id: "2026-05-26-filters-responsive"
+  type: fix
+  branch: fix/filters-responsive
+  description: "Keep filter toolbar layout stable on narrow screens (actions row separated from grid)"
+  created: "2026-05-26T17:00:00Z"
+  phase: done
+  integration_branch: null
+
+repos:
+  playhouse-web:
+    needed: true
+    base_branch: main
+    task_branch: fix/filters-responsive
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: true
+  playhouse-server:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+
+checklist:
+  - id: shared-layout
+    repo: playhouse-web
+    description: "Shared ListFiltersLayout + update filter panels/forms"
+    status: done
+  - id: verify
+    repo: playhouse-web
+    description: "npm test"
+    status: done
+
+notes: ""
