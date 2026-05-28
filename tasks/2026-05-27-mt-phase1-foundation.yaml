@@ -1,0 +1,102 @@
+task:
+  id: "2026-05-27-mt-phase2-runtime"
+  type: feature
+  branch: "feature/mt-phase2-runtime"
+  description: "Implement tenant middleware, DB router, flags/config APIs"
+  created: "2026-05-27T12:00:00Z"
+  phase: implementing
+  integration_branch: "multi-tenancy/phase-1"
+
+commit_policy:
+  auto_checkpoint: true
+  checkpoint_on_switch: true
+  checkpoint_on_session_end: true
+  squash_before_pr: true
+
+repos:
+  playhouse-server:
+    needed: true
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-web:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-control-plane:
+    needed: false
+    base_branch: dev
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-cicd:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-docs:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-integration-driver:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+
+checklist:
+  - id: setup-manifest
+    repo: playhouse-server
+    description: "Create Phase 2 manifest and task branch"
+    status: in_progress
+  - id: port-middleware
+    repo: playhouse-server
+    description: "TenantMiddleware and MIDDLEWARE wiring"
+    status: pending
+  - id: port-router
+    repo: playhouse-server
+    description: "TenantDBRouter and DATABASE_ROUTERS wiring"
+    status: pending
+  - id: registry-mgmt
+    repo: playhouse-server
+    description: "Registry DB settings and flags runtime helpers"
+    status: pending
+  - id: api-endpoints
+    repo: playhouse-server
+    description: "GET /api/v1/flags and /api/v1/config"
+    status: pending
+  - id: port-tests
+    repo: playhouse-server
+    description: "config/tests/test_tenancy.py integration tests"
+    status: pending
+  - id: verify-tests
+    repo: playhouse-server
+    description: "pytest and manage.py check"
+    status: pending
+  - id: handoff-notes
+    repo: playhouse-server
+    description: "config/HANDOFF-PHASE2.md"
+    status: pending
+
+notes: |
+  Branch from multi-tenancy/phase-1 (includes Phase 1 foundation).
+  Phase 1 archived to .cursor/tasks/2026-05-27-mt-phase1-foundation.yaml

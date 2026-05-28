@@ -1,0 +1,43 @@
+task:
+  id: "2026-05-28-local-mt-stack-wrap-up"
+  type: chore
+  branch: "main/dev (direct)"
+  description: "Local multi-tenant stack fixes and merge to main/dev"
+  created: "2026-05-28T00:00:00Z"
+  phase: done
+  integration_branch: null
+
+repos:
+  playhouse-server:
+    needed: true
+    base_branch: main
+    merged: true
+    pushed: true
+    commit: "9f3d458"
+  playhouse-control-plane:
+    needed: true
+    base_branch: dev
+    merged: true
+    pushed: true
+    commit: "8408782"
+  playhouse-cicd:
+    needed: true
+    base_branch: main
+    merged: true
+    pushed: true
+    commit: "ff655f8"
+  playhouse-web:
+    needed: true
+    base_branch: main
+    merged: true
+    pushed: true
+    commit: "080464a"
+
+summary: |
+  Local multi-tenant Docker stack: nginx admin.localhost, tenant migrations,
+  SCRAM-SHA-256 tenant passwords, fresh migrations, authtoken tenant routing fix.
+  All repos pushed per user-approved merge.
+
+notes: |
+  .env in playhouse-cicd left uncommitted (local secrets).
+  Login 500 fix: authtoken.token added to TENANT_SCOPED_MODELS.
