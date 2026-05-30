@@ -1,0 +1,95 @@
+task:
+  id: "2026-05-28-saas-pricing-entitlements"
+  type: feature
+  branch: "feature/saas-pricing-entitlements"
+  description: "Implement SaaS pricing plans with tenant feature/limit entitlements"
+  created: "2026-05-28T15:30:00Z"
+  phase: implementing
+  integration_branch: null
+
+commit_policy:
+  auto_checkpoint: true
+  checkpoint_on_switch: true
+  checkpoint_on_session_end: true
+  squash_before_pr: true
+
+repos:
+  playhouse-server:
+    needed: true
+    base_branch: main
+    task_branch: "feature/saas-pricing-entitlements"
+    branch_created: true
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-web:
+    needed: true
+    base_branch: main
+    task_branch: "feature/saas-pricing-entitlements"
+    branch_created: true
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-control-plane:
+    needed: true
+    base_branch: dev
+    task_branch: "feature/saas-pricing-entitlements"
+    branch_created: true
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-cicd:
+    needed: true
+    base_branch: main
+    task_branch: "feature/saas-pricing-entitlements"
+    branch_created: true
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-docs:
+    needed: true
+    base_branch: main
+    task_branch: "feature/saas-pricing-entitlements"
+    branch_created: true
+    has_changes: true
+    committed: true
+    pushed: false
+  playhouse-integration-driver:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+
+checklist:
+  - id: phase-0-design
+    repo: playhouse-docs
+    description: "Finalize entitlement model and API contracts"
+    status: done
+  - id: phase-1-registry
+    repo: playhouse-control-plane
+    description: "Add plans, limits, overrides schema and cp-api support"
+    status: pending
+  - id: phase-2-server
+    repo: playhouse-server
+    description: "Expose entitlements to tenant apps and enforce backend gates"
+    status: pending
+  - id: phase-3-web
+    repo: playhouse-web
+    description: "Bootstrap entitlements client and gate UI by plan"
+    status: pending
+  - id: phase-4-ops
+    repo: playhouse-cicd
+    description: "Rollout controls, observability, and production readiness"
+    status: pending
+  - id: phase-5-validation
+    repo: playhouse-docs
+    description: "Cross-repo testing matrix, migration checks, and launch runbook"
+    status: pending
+
+notes: |
+  Phase 0 complete on feature/saas-pricing-entitlements in playhouse-docs.
+  ADR: saas-pricing-entitlements/phase-0-entitlements-contract-adr.md
+  Review checklist ready for human signoff before Phase 1.
