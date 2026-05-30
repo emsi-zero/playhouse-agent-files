@@ -19,7 +19,7 @@ repos:
     base_branch: main
     task_branch: "feature/saas-pricing-entitlements"
     branch_created: true
-    has_changes: false
+    has_changes: true
     committed: false
     pushed: false
   playhouse-web:
@@ -35,8 +35,8 @@ repos:
     base_branch: dev
     task_branch: "feature/saas-pricing-entitlements"
     branch_created: true
-    has_changes: false
-    committed: false
+    has_changes: true
+    committed: true
     pushed: false
   playhouse-cicd:
     needed: true
@@ -71,11 +71,11 @@ checklist:
   - id: phase-1-registry
     repo: playhouse-control-plane
     description: "Add plans, limits, overrides schema and cp-api support"
-    status: pending
+    status: done
   - id: phase-2-server
     repo: playhouse-server
     description: "Expose entitlements to tenant apps and enforce backend gates"
-    status: pending
+    status: done
   - id: phase-3-web
     repo: playhouse-web
     description: "Bootstrap entitlements client and gate UI by plan"
@@ -90,6 +90,8 @@ checklist:
     status: pending
 
 notes: |
-  Phase 0 complete on feature/saas-pricing-entitlements in playhouse-docs.
-  ADR: saas-pricing-entitlements/phase-0-entitlements-contract-adr.md
-  Review checklist ready for human signoff before Phase 1.
+  Phase 1 complete in playhouse-control-plane on feature/saas-pricing-entitlements.
+  Phase 2 complete in playhouse-server: entitlements resolver, GET /api/v1/entitlements,
+  require_feature/enforce_limit helpers, first-wave endpoint guards, tests (54 passed).
+  Admin UI plan screens deferred; cp-api + resolver + migration shipped.
+  UI scope: docs/entitlements-phase1-ui-scope.md
