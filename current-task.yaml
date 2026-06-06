@@ -1,9 +1,9 @@
 task:
-  id: "2026-05-28-saas-pricing-entitlements"
+  id: "2026-06-01-phase-0-routing-infrastructure"
   type: feature
-  branch: "feature/saas-pricing-entitlements"
-  description: "Implement SaaS pricing plans with tenant feature/limit entitlements"
-  created: "2026-05-28T15:30:00Z"
+  branch: "feature/phase-0-routing-infra"
+  description: "Phase 0: Build routing infrastructure, registry schema, CP-API, Admin UI"
+  created: "2026-06-01T20:13:00Z"
   phase: implementing
   integration_branch: null
 
@@ -14,84 +14,95 @@ commit_policy:
   squash_before_pr: true
 
 repos:
-  playhouse-server:
-    needed: true
-    base_branch: main
-    task_branch: "feature/saas-pricing-entitlements"
-    branch_created: true
-    has_changes: true
-    committed: false
-    pushed: false
-  playhouse-web:
-    needed: true
-    base_branch: main
-    task_branch: "feature/saas-pricing-entitlements"
-    branch_created: true
-    has_changes: false
-    committed: false
-    pushed: false
   playhouse-control-plane:
     needed: true
     base_branch: dev
-    task_branch: "feature/saas-pricing-entitlements"
+    task_branch: "feature/phase-0-routing-infra"
     branch_created: true
     has_changes: true
-    committed: true
+    committed: false
     pushed: false
   playhouse-cicd:
     needed: true
     base_branch: main
-    task_branch: "feature/saas-pricing-entitlements"
+    task_branch: "feature/phase-0-routing-infra"
     branch_created: true
-    has_changes: false
+    has_changes: true
     committed: false
     pushed: false
   playhouse-docs:
     needed: true
     base_branch: main
-    task_branch: "feature/saas-pricing-entitlements"
+    task_branch: "feature/phase-0-routing-infra"
     branch_created: true
-    has_changes: true
-    committed: true
-    pushed: false
-  playhouse-integration-driver:
-    needed: false
-    base_branch: main
-    task_branch: null
-    branch_created: false
     has_changes: false
-    committed: false
+    committed: true
     pushed: false
 
 checklist:
-  - id: phase-0-design
-    repo: playhouse-docs
-    description: "Finalize entitlement model and API contracts"
-    status: done
-  - id: phase-1-registry
+  - id: schema-design
     repo: playhouse-control-plane
-    description: "Add plans, limits, overrides schema and cp-api support"
+    description: "Design and implement registry schema (4 tables + indexes)"
     status: done
-  - id: phase-2-server
-    repo: playhouse-server
-    description: "Expose entitlements to tenant apps and enforce backend gates"
+  - id: migration-test
+    repo: playhouse-control-plane
+    description: "Write and test migration file"
     status: done
-  - id: phase-3-web
-    repo: playhouse-web
-    description: "Bootstrap entitlements client and gate UI by plan"
-    status: pending
-  - id: phase-4-ops
-    repo: playhouse-cicd
-    description: "Rollout controls, observability, and production readiness"
-    status: pending
-  - id: phase-5-validation
+  - id: schema-docs
     repo: playhouse-docs
-    description: "Cross-repo testing matrix, migration checks, and launch runbook"
-    status: pending
+    description: "Document schema design and rationale"
+    status: done
+  - id: routing-service
+    repo: playhouse-control-plane
+    description: "Routing service with /route, /health, cache, Dockerfile"
+    status: done
+  - id: routing-compose
+    repo: playhouse-cicd
+    description: "Add routing-service to docker-compose.prod.yml"
+    status: done
+  - id: cp-api-endpoints
+    repo: playhouse-control-plane
+    description: "CP-API releases, rollouts, deployments endpoints with validation and tests"
+    status: done
+  - id: admin-ui-deployments
+    repo: playhouse-control-plane
+    description: "Admin UI deployments dashboard, release management, canary wizard"
+    status: done
+  - id: metrics-websocket
+    repo: playhouse-control-plane
+    description: "CP-API metrics WebSocket stream (/api/v1/metrics/stream) with hub broadcast"
+    status: done
+  - id: admin-ui-migration-monitoring
+    repo: playhouse-control-plane
+    description: "Admin UI rollout monitor, tenant migration control, deployment audit log"
+    status: done
+  - id: migration-history-gap
+    repo: playhouse-control-plane
+    description: "GET /tenants/{id}/migration-history + TenantMigrationControl History modal"
+    status: done
+  - id: operational-metrics-gap
+    repo: playhouse-control-plane
+    description: "Pool health probes, migration_jobs stats, DeploymentsDashboard operational section"
+    status: done
+  - id: nginx-dynamic-routing
+    repo: playhouse-cicd
+    description: "Nginx auth_request dynamic routing via routing-service + versioned assets"
+    status: done
+  - id: compose-prod-hardening
+    repo: playhouse-cicd
+    description: "Prod compose: admin-web, cp-agent, health checks, resource limits, init-deployment-pools.sh"
+    status: done
 
 notes: |
-  Phase 1 complete in playhouse-control-plane on feature/saas-pricing-entitlements.
-  Phase 2 complete in playhouse-server: entitlements resolver, GET /api/v1/entitlements,
-  require_feature/enforce_limit helpers, first-wave endpoint guards, tests (54 passed).
-  Admin UI plan screens deferred; cp-api + resolver + migration shipped.
-  UI scope: docs/entitlements-phase1-ui-scope.md
+  Phase 0 progress:
+  - Task 0.1: Registry schema (000005) — done
+  - Task 0.2: Routing service — done
+  - Task 0.3: CP-API endpoints — done
+  - Task 0.4: Admin UI (deployments, releases, canary wizard) — done
+  - Metrics WebSocket: /api/v1/metrics/stream — done
+  - Task 0.5: Rollout monitor, tenant migration, audit log — done
+  - Gap fix: migration history API/UI + operational metrics (probes, dashboard cards) — done (uncommitted)
+  - Task 0.6: Nginx auth_request dynamic routing — done (uncommitted, playhouse-cicd)
+  - Task 0.7: Docker Compose prod hardening — done (uncommitted, playhouse-cicd)
+
+  Next: Task 0.8 — Documentation & integration testing

@@ -1,0 +1,117 @@
+task:
+  id: "2026-05-28-saas-pricing-entitlements"
+  type: feature
+  branch: "feature/saas-pricing-entitlements"
+  description: "Implement SaaS pricing plans with tenant feature/limit entitlements"
+  created: "2026-05-28T15:30:00Z"
+  phase: done
+  completed: "2026-06-01T00:00:00Z"
+  integration_branch: null
+
+commit_policy:
+  auto_checkpoint: true
+  checkpoint_on_switch: true
+  checkpoint_on_session_end: true
+  squash_before_pr: true
+
+repos:
+  playhouse-server:
+    needed: true
+    base_branch: main
+    task_branch: "feature/saas-pricing-entitlements"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: true
+    merge_commit: "1762410"
+  playhouse-web:
+    needed: true
+    base_branch: main
+    task_branch: "feature/saas-pricing-entitlements"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: true
+    merge_commit: "357567c"
+  playhouse-control-plane:
+    needed: true
+    base_branch: dev
+    task_branch: "feature/saas-pricing-entitlements"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: true
+    merge_commit: "5f40790"
+  playhouse-cicd:
+    needed: true
+    base_branch: main
+    task_branch: "feature/saas-pricing-entitlements"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: true
+    merge_commit: "dfc76c4"
+  playhouse-docs:
+    needed: true
+    base_branch: main
+    task_branch: "feature/saas-pricing-entitlements"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: true
+    merge_commit: "3ecba40"
+  playhouse-integration-driver:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+
+checklist:
+  - id: phase-0-design
+    repo: playhouse-docs
+    description: "Finalize entitlement model and API contracts"
+    status: done
+  - id: phase-1-registry
+    repo: playhouse-control-plane
+    description: "Add plans, limits, overrides schema and cp-api support"
+    status: done
+  - id: phase-2-server
+    repo: playhouse-server
+    description: "Expose entitlements to tenant apps and enforce backend gates"
+    status: done
+  - id: phase-3-web
+    repo: playhouse-web
+    description: "Bootstrap entitlements client and gate UI by plan"
+    status: done
+  - id: phase-3-web-locked-ui
+    repo: playhouse-web
+    description: "Show entitlement-gated features in locked state with upgrade badges"
+    status: done
+  - id: phase-3-web-quota-badges
+    repo: playhouse-web
+    description: "Add quota-locked badges to all create/add buttons and feature-locked options"
+    status: done
+  - id: phase-3-web-granular-locks
+    repo: playhouse-web
+    description: "Per-component locked props: dropdown options, LockableButton, hour-only locks"
+    status: done
+  - id: phase-3-web-locked-ui-polish
+    repo: playhouse-web
+    description: "Polish locked badges and disabled states with rose-accent design tokens"
+    status: done
+  - id: phase-4-ops
+    repo: playhouse-cicd
+    description: "Rollout controls, observability, and production readiness"
+    status: pending
+  - id: phase-5-validation
+    repo: playhouse-docs
+    description: "Cross-repo testing matrix, migration checks, and launch runbook"
+    status: pending
+
+notes: |
+  Merged 2026-06-01 via squash-merge into base branches.
+  Phase 4 (ops) and Phase 5 (validation) remain pending for a follow-up task.
+  Admin UI plan screens deferred; cp-api + resolver + migration shipped.
