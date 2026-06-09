@@ -4,8 +4,9 @@ task:
   branch: "feature/phase-0-routing-infra"
   description: "Phase 0: Build routing infrastructure, registry schema, CP-API, Admin UI"
   created: "2026-06-01T20:13:00Z"
-  phase: implementing
+  phase: done
   integration_branch: null
+  merged_at: "2026-06-09T00:00:00Z"
 
 commit_policy:
   auto_checkpoint: true
@@ -19,17 +20,19 @@ repos:
     base_branch: dev
     task_branch: "feature/phase-0-routing-infra"
     branch_created: true
-    has_changes: true
-    committed: false
-    pushed: false
+    has_changes: false
+    committed: true
+    pushed: true
+    merge_commit: "bcc424d"
   playhouse-cicd:
     needed: true
     base_branch: main
     task_branch: "feature/phase-0-routing-infra"
     branch_created: true
-    has_changes: true
-    committed: false
-    pushed: false
+    has_changes: false
+    committed: true
+    pushed: true
+    merge_commit: "1d92b7c"
   playhouse-docs:
     needed: true
     base_branch: main
@@ -37,7 +40,8 @@ repos:
     branch_created: true
     has_changes: false
     committed: true
-    pushed: false
+    pushed: true
+    merge_commit: "4e075ef"
 
 checklist:
   - id: schema-design
@@ -94,15 +98,8 @@ checklist:
     status: done
 
 notes: |
-  Phase 0 progress:
-  - Task 0.1: Registry schema (000005) — done
-  - Task 0.2: Routing service — done
-  - Task 0.3: CP-API endpoints — done
-  - Task 0.4: Admin UI (deployments, releases, canary wizard) — done
-  - Metrics WebSocket: /api/v1/metrics/stream — done
-  - Task 0.5: Rollout monitor, tenant migration, audit log — done
-  - Gap fix: migration history API/UI + operational metrics (probes, dashboard cards) — done (uncommitted)
-  - Task 0.6: Nginx auth_request dynamic routing — done (uncommitted, playhouse-cicd)
-  - Task 0.7: Docker Compose prod hardening — done (uncommitted, playhouse-cicd)
-
-  Next: Task 0.8 — Documentation & integration testing
+  Merged 2026-06-09:
+  - playhouse-control-plane → dev (bcc424d)
+  - playhouse-cicd → main (1d92b7c)
+  - playhouse-docs → main (4e075ef)
+  Task branches deleted locally; remotes were never pushed.
