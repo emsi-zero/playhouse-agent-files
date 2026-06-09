@@ -1,0 +1,70 @@
+task:
+  id: "2026-06-09-docs-cleanup"
+  type: chore
+  description: "Remove all documentation files from non-docs repos; provide architectural analysis of what docs are needed"
+  branch: "docs/cleanup"
+  phase: implementing
+  integration_branch: null
+
+repos:
+  playhouse-server:
+    needed: true
+    base_branch: main
+    task_branch: "docs/cleanup"
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-web:
+    needed: true
+    base_branch: main
+    task_branch: "docs/cleanup"
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-cicd:
+    needed: true
+    base_branch: main
+    task_branch: "docs/cleanup"
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-control-plane:
+    needed: true
+    base_branch: dev
+    task_branch: "docs/cleanup"
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-integration-driver:
+    needed: true
+    base_branch: main
+    task_branch: "docs/cleanup"
+    has_changes: false
+    committed: false
+    pushed: false
+
+checklist:
+  - id: task-setup
+    description: "Create task manifest and branches"
+    status: done
+    repo: all
+  - id: delete-server-docs
+    description: "Delete all .md docs from playhouse-server"
+    status: pending
+    repo: playhouse-server
+  - id: delete-web-docs
+    description: "Delete all .md docs from playhouse-web"
+    status: pending
+    repo: playhouse-web
+  - id: delete-cicd-docs
+    description: "Delete all .md docs from playhouse-cicd"
+    status: pending
+    repo: playhouse-cicd
+  - id: delete-cp-docs
+    description: "Delete all .md docs from playhouse-control-plane"
+    status: pending
+    repo: playhouse-control-plane
+  - id: delete-driver-docs
+    description: "Delete all .md docs from playhouse-integration-driver"
+    status: pending
+    repo: playhouse-integration-driver
