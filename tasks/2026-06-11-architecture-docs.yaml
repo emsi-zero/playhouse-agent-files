@@ -1,0 +1,175 @@
+task:
+  id: "2026-06-11-architecture-docs"
+  type: docs
+  branch: "docs/architecture-overview"
+  description: "Document Pilche architecture: overview first, then context/container/component diagrams, API docs, deployment architecture, NFRs, and ADRs"
+  created: "2026-06-11T15:30:00Z"
+  phase: done
+  integration_branch: null
+
+commit_policy:
+  auto_checkpoint: true
+  checkpoint_on_switch: true
+  checkpoint_on_session_end: true
+  squash_before_pr: true
+
+repos:
+  playhouse-server:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-web:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-control-plane:
+    needed: false
+    base_branch: dev
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-cicd:
+    needed: false
+    base_branch: main
+    task_branch: null
+    branch_created: false
+    has_changes: false
+    committed: false
+    pushed: false
+  playhouse-docs:
+    needed: true
+    base_branch: main
+    task_branch: "docs/architecture-overview"
+    branch_created: true
+    has_changes: false
+    committed: true
+    pushed: true
+
+checklist:
+  - id: arch-overview
+    repo: playhouse-docs
+    description: "Write docs/architecture/01-architecture-overview.md"
+    status: done
+  - id: adrs
+    repo: playhouse-docs
+    description: "Write docs/architecture/adr/ index, template, and 16 ADRs"
+    status: done
+  - id: container-arch
+    repo: playhouse-docs
+    description: "Write docs/architecture/03-container-architecture.md (C2 diagram)"
+    status: done
+  - id: deployment-arch
+    repo: playhouse-docs
+    description: "Write docs/architecture/06-deployment-architecture.md"
+    status: done
+  - id: component-arch
+    repo: playhouse-docs
+    description: "Write docs/architecture/04-component-architecture.md (C3 diagrams)"
+    status: done
+  - id: api-docs
+    repo: playhouse-docs
+    description: "Write docs/architecture/05-api-documentation.md"
+    status: done
+  - id: nfrs
+    repo: playhouse-docs
+    description: "Write docs/architecture/07-non-functional-requirements.md"
+    status: done
+  - id: system-context
+    repo: playhouse-docs
+    description: "Write docs/architecture/02-system-context.md (C1 diagram) — mostly extraction from overview"
+    status: done
+  - id: tech-debt
+    repo: playhouse-docs
+    description: "Write docs/architecture/08-technical-debt-and-open-decisions.md consolidating gaps ledgers (03 §8, 06 §8), V1-V7 violations (04 §2.5), API debt (05 §6), open ADRs (0004, 0015)"
+    status: done
+
+notes: |
+  Decisions agreed with user (2026-06-11):
+  - Product name: Pilche (PlayHouse = legacy codename in code/repos; note this in docs)
+  - Audience: mixed (engineers + non-technical stakeholders)
+  - Status: pre-launch; include explicit maturity markers (implemented/partial/stub/planned)
+  - Market: Iranian indoor play centers; Persian-first, full RTL/bilingual
+  - Scale target: <200 tenants, DB-per-tenant on shared compute
+  - Managed SaaS is primary; self-hosted mode = dev/staging convenience only (brief mention)
+  - Canonical rollout path: tenant_releases + deployment_pools + routing-service
+    (legacy releases/rollouts noted as superseded)
+  - Licensing/Read-Only Mode NFRs: OMIT entirely (dropped)
+  - Quality attribute priority: tenant isolation > billing/visit correctness
+    (idempotency, audit) > operability (rollouts, flags, migrations) > venue
+    resilience (driver offline behavior)
+  - Diagrams: Mermaid in markdown
+  - Old docs were reset on this branch (commit 0ad6fa5); full old doc set lives on main
+  Known honesty points: row-level tenant models are stubs (isolation = DB-per-tenant
+  routing); backup/restore job handlers are stubs; OpenAPI generation not wired up;
+  frontend has no browser WebSockets (driver WS + admin metrics WS only).
+
+  NFR targets (2026-06-13, user-set): availability 99.5% business hours
+  (09:00-23:00) only; counter p95 <500ms; locker open <2s; RPO 24h nightly
+  logical backups; RTO 4 business hours; capacity = my proposed numbers accepted;
+  data protection baseline (no at-rest encryption commitment); security targets:
+  close cp-api port + secrets perms audit + rate limiting (no pentest milestone);
+  outage detection <5min; graceful degradation codified (no offline-mode future
+  requirement); maintainability current+coverage measurement (no threshold);
+  i18n as formal NFR. Numbered NFR-x.y IDs; gap summary in 07 \u00a710.
+
+  API doc rulings (2026-06-11): all four surfaces (tenant REST, driver protocol,
+  cp-api, routing-service); INVENTORY level (no request/response schemas - rot
+  risk without generator); old playhouse_openapi_v1.yaml ignored as stale;
+  internal audience. NO CODE CHANGES policy confirmed by user (no drf-spectacular
+  for now). User requested final doc: technical debts + decisions to be made
+  (added as checklist item tech-debt, doc 08).
+
+  C3 rulings (2026-06-11): scope = Django + control plane + driver (frontends
+  excluded); Django grouped in 4 domain clusters, not per-app deep dives; single
+  04 file; dependency rules stated NORMATIVELY with 7 flagged violations (V1-V7
+  in doc 04 \u00a72.5) incl. domain->api import in visit_entry_completion, circular
+  service pairs, audit/pricing views bypassing domain.
+
+  Deployment rulings (2026-06-11): live envs = prod (*.pilche.ir) + self-hosted
+  staging only (hosted staging/legacy stage defined but not running); host facts
+  kept abstract (single VM); container registry planned (SSH tarball = interim);
+  TLS renewal manual; backups = NONE today (critical pre-launch gap #1); monitoring
+  none today, Prometheus/Grafana/Loki planned; driver distribution manual (current
+  process, automation future). Gaps ledger in doc 06 \u00a78 (9 items).
+
+  C2 rulings (2026-06-11): Redis+Celery worker/beat = planned pre-launch additions
+  (prod currently has neither; scheduled jobs not executing; in-memory Channels);
+  runserver entrypoint = pre-launch TODO; cp-api host :8080 exposure = security TODO
+  (close, nginx /cp-api/ only); show dual pools per ADR-0013; doc 03 scope = prod
+  managed + venue only (env variants -> doc 06); brief self_hosted subsection;
+  overview corrected accordingly.
+
+  ADR decisions (2026-06-11): MADR format; historical decision dates + recorded date;
+  16 ADRs written (see adr/README.md). Open/undecided: ADR-0015 row-level tenant_id
+  (status Proposed), ADR-0004 cache invalidation (TTL+config_version vs Redis pub/sub).
+  ADR-0016 records licensing/Read-Only Mode as Withdrawn. ADRs 0001 and 0014 contain
+  reconstructed rationale flagged for user review. Doc order revised: ADRs done ->
+  container (03) -> deployment (06) -> component (04) -> API (05) -> NFRs (07) ->
+  system context (02, last).
+
+  C1 rulings (2026-06-13): two system boxes (Pilche SaaS + Venue Driver);
+  externals = locker controllers, printers, POS terminals (shown explicitly
+  as NO integration, manual payment-type recording); future actors (parents
+  portal, SMS, payment gateway) omitted entirely; doc 02 doubles as the
+  stakeholder-friendly entry doc with plain-language actor narratives.
+
+  Tech-debt rulings (2026-06-13): living register format with stable TD-xxx IDs
+  and status lifecycle (open/in-progress/resolved + changelog); organized by
+  horizon (P0 blockers / P1 / P2 / P3 cleanup); 8 open decisions D-1..D-8
+  framed ADR-ready (incl. ADR-0004, ADR-0015, registry choice, monitoring
+  stack, ASGI server, driver auto-update, kill 'server' receipt mode,
+  coverage threshold); fresh code-sweep findings ALL included; silent discount
+  degradation ruled a BUG (TD-011); legacy stage compose to be RETIRED not
+  fixed (TD-037); product/UX loose ends EXCLUDED (product backlog, not doc 08).
+  ALL 9 checklist items done — documentation series merged to main
+  (commit 338b9c3) on 2026-06-13.
